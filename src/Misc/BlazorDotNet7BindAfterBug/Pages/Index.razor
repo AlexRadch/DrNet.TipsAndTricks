@@ -20,7 +20,7 @@
         <li>
             <input type="checkbox" @bind="todo.IsDone" />
             <input @bind="todo.Title" />
-            <button @onclick="@RemoveTodo(todo)">Remove</button>
+            <button @onclick="@(() => RemoveTodo(todo))">Remove</button>
         </li>
     }
 </ul>
