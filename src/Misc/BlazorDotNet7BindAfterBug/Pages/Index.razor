@@ -5,9 +5,11 @@
 <h1>Todo (@ToDoneCount)</h1>
 
 <div>
-    <input placeholder="Something todo" @bind="newTodo" @bind:after="ValidateTodo" />
-    <button @onclick="AddTodo">Add todo</button>
-    <span>@errorMessage</span>
+    <form @onsubmit=AddTodo>
+        <input placeholder="Something todo" @bind="newTodo" @bind:after="ValidateTodo" />
+        <button>Add todo</button>
+        <span>@errorMessage</span>
+    </form>
 </div>
 <div>
     <button @onclick="ClearDoneTodo" disabled="@(DoneCount <= 0)">Clear done</button>
@@ -28,6 +30,7 @@
 @code {
 
     private string newTodo = String.Empty;
+    private string errorMessage = String.Empty;
     private List<TodoItem> todos = new();
 
     private int DoneCount => todos.Count(todo => todo.IsDone);
@@ -37,14 +40,20 @@
     {
         if (!string.IsNullOrWhiteSpace(newTodo))
         {
+            errorMessage = string.Empty;
             todos.Add(new TodoItem { Title = newTodo });
             //newTodo = string.Empty;
         }
+        else
+        {
+            errorMessage = "Todo is empty";
+        }
     }
 
-    private void RemoveTodo(TodoItem todo)
+    private void ValidateTodo()
     {
-        todos.Remove(todo);
+        if (!string.IsNullOrWhiteSpace(newTodo))
+            errorMessage = string.Empty;
     }
 
     private void ClearAllTodo()
@@ -57,13 +66,8 @@
         todos.RemoveAll(todo => todo.IsDone);
     }
 
-    private string errorMessage = String.Empty;
-
-    private void ValidateTodo()
+    private void RemoveTodo(TodoItem todo)
     {
-        if (string.IsNullOrWhiteSpace(newTodo))
-            errorMessage = "Todo is empty";
-        else
-            errorMessage = string.Empty;
+        todos.Remove(todo);
     }
 }

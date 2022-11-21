@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordWithCalculatedPropert
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorDotNet7BindAfterBug", "Misc\BlazorDotNet7BindAfterBug\BlazorDotNet7BindAfterBug.csproj", "{F417350D-487A-4529-8C6E-44FED212F730}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RawStringLiterals", "RawStringLiterals", "{3257B981-FB5E-4F97-A208-D09E57B3ECD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentsAndLineContinuation", "RawStringLiterals\CommentsAndLineContinuation\CommentsAndLineContinuation.csproj", "{18D36996-E910-46F5-BDA4-09FDFDC26018}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +27,10 @@ Global
 		{F417350D-487A-4529-8C6E-44FED212F730}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F417350D-487A-4529-8C6E-44FED212F730}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F417350D-487A-4529-8C6E-44FED212F730}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18D36996-E910-46F5-BDA4-09FDFDC26018}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18D36996-E910-46F5-BDA4-09FDFDC26018}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18D36996-E910-46F5-BDA4-09FDFDC26018}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18D36996-E910-46F5-BDA4-09FDFDC26018}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B5A3BBBE-D5CD-4C70-A818-456220A273C5} = {45CFE352-A8F8-442D-B858-84A968A0F90D}
 		{F417350D-487A-4529-8C6E-44FED212F730} = {45CFE352-A8F8-442D-B858-84A968A0F90D}
+		{18D36996-E910-46F5-BDA4-09FDFDC26018} = {3257B981-FB5E-4F97-A208-D09E57B3ECD6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27F8641A-F029-4C5A-837B-C082A6BD25F2}
