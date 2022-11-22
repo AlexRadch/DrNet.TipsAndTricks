@@ -1,11 +1,11 @@
 ﻿using System.Numerics;
 
-var ints = Generate(new Random(), random => random.Next(100)).Take(5).ToArray();
+var ints = Generate(new Random(), random => random.Next(100)).Take(10).ToArray();
 
-var sum1 = Sum1(ints); // Compiler error. See https://github.com/dotnet/roslyn/issues/65534
-var sum2 = Sum<int, double>(ints);
-var avr = Average<int, double>(ints);
-var dev = StandardDeviation<int, double>(ints);
+var sum1 = Sum1(ints);
+var sum2 = Sum(ints);
+var avr = Average(ints);
+var dev = StandardDeviation(ints);
 
 Console.WriteLine($"""
     Sum1 = {sum1}
@@ -15,23 +15,22 @@ Console.WriteLine($"""
 
     """);
 
-var longs = Generate(new Random(), random => random.NextInt64(100)).Take(5).ToArray();
+var longs = Generate(new Random(), random => random.NextInt64(100)).Take(10).ToArray();
 
 //sum1 = Sum1(longs);
-sum2 = Sum<long, double>(longs);
-avr = Average<long, double>(longs);
-dev = StandardDeviation<long, double>(longs);
+sum2 = Sum(longs);
+avr = Average(longs);
+dev = StandardDeviation(longs);
 
 Console.WriteLine($"""
     {""//Sum1 = {sum1}
    }Sum2 = {sum2}
     Avr = {avr}
-    dev = {dev}{""
-   } // the same line
+    dev = {dev}
 
     """);
 
-static double Sum1(IEnumerable<int> values) // Compiler error. See https://github.com/dotnet/roslyn/issues/65534
+static double Sum1(IEnumerable<int> values)
 {
     long result = 0;
 
@@ -43,42 +42,39 @@ static double Sum1(IEnumerable<int> values) // Compiler error. See https://githu
     return result;
 }
 
-static TResult Sum<T, TResult>(IEnumerable<T> values)
+static double Sum<T>(IEnumerable<T> values)
     where T : INumberBase<T>
-    where TResult : INumberBase<TResult>
 {
-    TResult result = TResult.Zero;
+    double result = 0d;
 
     foreach (var value in values)
     {
-        checked { result += TResult.CreateChecked(value); }
+        checked { result += double.CreateChecked(value); }
     }
 
     return result;
 }
 
-static TResult Average<T, TResult>(IEnumerable<T> values)
+static double Average<T>(IEnumerable<T> values)
     where T : INumberBase<T>
-    where TResult : INumberBase<TResult>
 {
-    TResult sum = Sum<T, TResult>(values);
-    return sum / TResult.CreateChecked(values.Count());
+    double sum = Sum(values);
+    return sum / double.CreateChecked(values.Count());
 }
 
-static TResult StandardDeviation<T, TResult>(IEnumerable<T> values)
+static double StandardDeviation<T>(IEnumerable<T> values)
     where T : INumberBase<T>
-    where TResult : IRootFunctions<TResult>
 {
-    TResult standardDeviation = TResult.Zero;
+    double standardDeviation = 0d;
 
     if (values.Any())
     {
-        TResult average = Average<T, TResult>(values);
-        TResult sum = Sum<TResult, TResult>(values.Select((value) => {
-            var deviation = TResult.CreateChecked(value) - average;
+        double average = Average(values);
+        double sum = Sum(values.Select((value) => {
+            var deviation = double.CreateChecked(value) - average;
             return deviation * deviation;
         }));
-        standardDeviation = TResult.Sqrt(sum / TResult.CreateSaturating(values.Count() - 1));
+        standardDeviation = double.Sqrt(sum / double.CreateSaturating(values.Count() - 1));
     }
 
     return standardDeviation;
