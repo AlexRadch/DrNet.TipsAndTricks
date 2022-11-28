@@ -15,10 +15,12 @@ public class GenericAttribute<T> : Attribute
 
 
 public class GenericClass<T>
-    where T : class
+    where T : class, new()
 {
     [Type(typeof(string))]
     [Generic<string>] 
-    //[Generic<T>] // Not allowed! Generic attributes must be fully constructed types.
     public string Method() => string.Empty;
+
+    //[Generic<T>] // Not allowed! Generic attributes must be fully constructed types.
+    public T MethodT() => new T();
 }
