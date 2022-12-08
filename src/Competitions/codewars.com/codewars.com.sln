@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permutations", "Permutations\Permutations.csproj", "{008327BD-BB9A-4036-A1E3-F4E32C1B3EFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Range Extraction", "Range Extraction\Range Extraction.csproj", "{893714CE-E01B-48BD-8E99-9F725C54DEBC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{008327BD-BB9A-4036-A1E3-F4E32C1B3EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{008327BD-BB9A-4036-A1E3-F4E32C1B3EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{008327BD-BB9A-4036-A1E3-F4E32C1B3EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{008327BD-BB9A-4036-A1E3-F4E32C1B3EFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{893714CE-E01B-48BD-8E99-9F725C54DEBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{893714CE-E01B-48BD-8E99-9F725C54DEBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{893714CE-E01B-48BD-8E99-9F725C54DEBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{893714CE-E01B-48BD-8E99-9F725C54DEBC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A3FBAE0-62EC-4D2A-99BE-42702E24E26E}
+	EndGlobalSection
+EndGlobal
