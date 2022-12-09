@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Who likes it", "Who likes i
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remove the minimum", "Remove the minimum\Remove the minimum.csproj", "{6A57AF8E-1667-47AC-A26C-79A66644BC79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pick peaks", "Pick peaks\Pick peaks.csproj", "{4B7308BC-0E2C-4ACB-8D4E-AA062E5B583C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{6A57AF8E-1667-47AC-A26C-79A66644BC79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A57AF8E-1667-47AC-A26C-79A66644BC79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A57AF8E-1667-47AC-A26C-79A66644BC79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B7308BC-0E2C-4ACB-8D4E-AA062E5B583C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B7308BC-0E2C-4ACB-8D4E-AA062E5B583C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B7308BC-0E2C-4ACB-8D4E-AA062E5B583C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B7308BC-0E2C-4ACB-8D4E-AA062E5B583C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
