@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delete occurrences of an el
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product of consecutive Fib numbers", "Product of consecutive Fib numbers\Product of consecutive Fib numbers.csproj", "{B6287758-437A-4364-B364-1C192A14CA57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "First non-repeating character", "First non-repeating character\First non-repeating character.csproj", "{5706E863-8DE7-4E68-A86E-E6E042D0605D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B6287758-437A-4364-B364-1C192A14CA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6287758-437A-4364-B364-1C192A14CA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6287758-437A-4364-B364-1C192A14CA57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5706E863-8DE7-4E68-A86E-E6E042D0605D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5706E863-8DE7-4E68-A86E-E6E042D0605D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5706E863-8DE7-4E68-A86E-E6E042D0605D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5706E863-8DE7-4E68-A86E-E6E042D0605D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
