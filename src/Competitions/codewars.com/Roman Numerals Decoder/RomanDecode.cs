@@ -7,24 +7,30 @@ public class RomanDecode
 {
     public static int Solution(string roman)
     {
+        var result = 0;
+
         var prev = 0;
-        return roman.Select(c => {
-            var v = RomanDictionary[c];
-            if (prev < v)
-                v -= prev + prev;
-            prev = v;
-            return v;
-        }).Sum();
+        foreach(var c in roman)
+        {
+            var current = RomanCharValue(c);
+            result += current;
+            if (prev < current)
+                result -= prev + prev;
+            prev = current;
+        }
+
+        return result;
     }
 
-    private static Dictionary<char, int> RomanDictionary = new()
-  {
-    { 'I', 1 },
-    { 'V', 5 },
-    { 'X', 10 },
-    { 'L', 50 },
-    { 'C', 100 },
-    { 'D', 500 },
-    { 'M', 1000 },
-  };
+    public static int RomanCharValue(char c) => c switch
+    {
+        'I' => 1,
+        'V' => 5,
+        'X' => 10,
+        'L' => 50,
+        'C' => 100,
+        'D' => 500,
+        'M' => 1000,
+        _ => throw new System.NotImplementedException()
+    };
 }
