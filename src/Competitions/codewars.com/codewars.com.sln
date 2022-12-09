@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vowel Count", "Vowel Count\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Who likes it", "Who likes it\Who likes it.csproj", "{79E2118A-55A8-44DF-A341-DEDF2636A260}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remove the minimum", "Remove the minimum\Remove the minimum.csproj", "{6A57AF8E-1667-47AC-A26C-79A66644BC79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{79E2118A-55A8-44DF-A341-DEDF2636A260}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79E2118A-55A8-44DF-A341-DEDF2636A260}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79E2118A-55A8-44DF-A341-DEDF2636A260}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A57AF8E-1667-47AC-A26C-79A66644BC79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A57AF8E-1667-47AC-A26C-79A66644BC79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A57AF8E-1667-47AC-A26C-79A66644BC79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A57AF8E-1667-47AC-A26C-79A66644BC79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
