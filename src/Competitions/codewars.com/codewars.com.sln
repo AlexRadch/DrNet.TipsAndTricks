@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Replace With Alphabet Posit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Count characters in your string", "Count characters in your string\Count characters in your string.csproj", "{871052E8-52EE-4E87-831A-FB5BDE1762CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RGB To Hex Conversion", "RGB To Hex Conversion\RGB To Hex Conversion.csproj", "{580AEC04-E6FD-448B-928D-1FE64DDCE09A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{871052E8-52EE-4E87-831A-FB5BDE1762CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{871052E8-52EE-4E87-831A-FB5BDE1762CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{871052E8-52EE-4E87-831A-FB5BDE1762CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{580AEC04-E6FD-448B-928D-1FE64DDCE09A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{580AEC04-E6FD-448B-928D-1FE64DDCE09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{580AEC04-E6FD-448B-928D-1FE64DDCE09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{580AEC04-E6FD-448B-928D-1FE64DDCE09A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
