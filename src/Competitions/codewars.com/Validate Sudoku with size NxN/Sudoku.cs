@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 // Validate Sudoku with size `NxN`
@@ -20,24 +21,33 @@ class Sudoku
         if (sudokuData.Length != N)
             return false;
 
-        foreach (var lineData in sudokuData)
-            if (!IsValid(lineData, N))
-                return false;
+        SortedSet<int> line = new SortedSet<int>();
 
-        var line = new int[N];
+        foreach (var lineData in sudokuData)
+        {
+            line.Clear();
+            line.UnionWith(lineData);
+
+            if (!IsValid(line, N))
+                return false;
+        }
+
         for (var i = 0; i < N; ++i)
         {
+            line.Clear();
             for (var j = 0; j < N; ++j)
-                line[j] = sudokuData[j][i];
+                line.Add(sudokuData[j][i]);
+
             if (!IsValid(line, N))
                 return false;
         }
 
         for (var i = 0; i < n; ++i)
         {
+            line.Clear();
             for (var j = 0; j < n; ++j)
                 for (var k = 0; k < n; ++k)
-                    line[j * n + k] = sudokuData[(i / n) * n + j][i % n * n + (j / n) * n + k];
+                    line.Add(sudokuData[i / n * n + j][i % n * n + j / n * n + k]);
 
             if (!IsValid(line, N))
                 return false;
@@ -46,15 +56,6 @@ class Sudoku
         return true;
     }
 
-    private bool IsValid(int[] sudoku, int n)
-    {
-        if (sudoku.Length != n)
-            return false;
-
-        for (var i = 1; i <= n; ++i) 
-            if (!sudoku.Contains(i))
-                return false;
-
-        return true;
-    }
+    private bool IsValid(SortedSet<int> sudoku, int N) =>
+        sudoku.Count == N && sudoku.Min == 1 && sudoku.Max == N;
 }
