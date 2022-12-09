@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pick peaks", "Pick peaks\Pi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Josephus Permutation", "Josephus Permutation\Josephus Permutation.csproj", "{F6C91982-F79F-47BC-9839-F0ADBD9D327F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validate Sudoku with size NxN", "Validate Sudoku with size NxN\Validate Sudoku with size NxN.csproj", "{4B69B1FA-0274-429C-8CAA-A1C6AEED8981}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{F6C91982-F79F-47BC-9839-F0ADBD9D327F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6C91982-F79F-47BC-9839-F0ADBD9D327F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6C91982-F79F-47BC-9839-F0ADBD9D327F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B69B1FA-0274-429C-8CAA-A1C6AEED8981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B69B1FA-0274-429C-8CAA-A1C6AEED8981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B69B1FA-0274-429C-8CAA-A1C6AEED8981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B69B1FA-0274-429C-8CAA-A1C6AEED8981}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
