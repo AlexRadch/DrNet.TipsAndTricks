@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Find The Parity Outlier", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vowel Count", "Vowel Count\Vowel Count.csproj", "{8507ADBA-CC1D-4797-84F6-CABEE2E29AE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Who likes it", "Who likes it\Who likes it.csproj", "{79E2118A-55A8-44DF-A341-DEDF2636A260}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{8507ADBA-CC1D-4797-84F6-CABEE2E29AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8507ADBA-CC1D-4797-84F6-CABEE2E29AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8507ADBA-CC1D-4797-84F6-CABEE2E29AE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79E2118A-55A8-44DF-A341-DEDF2636A260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79E2118A-55A8-44DF-A341-DEDF2636A260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79E2118A-55A8-44DF-A341-DEDF2636A260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79E2118A-55A8-44DF-A341-DEDF2636A260}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
