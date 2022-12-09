@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product of consecutive Fib 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "First non-repeating character", "First non-repeating character\First non-repeating character.csproj", "{5706E863-8DE7-4E68-A86E-E6E042D0605D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roman Numerals Decoder", "Roman Numerals Decoder\Roman Numerals Decoder.csproj", "{52891D20-7D7E-469F-8502-CB356852F06E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{5706E863-8DE7-4E68-A86E-E6E042D0605D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5706E863-8DE7-4E68-A86E-E6E042D0605D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5706E863-8DE7-4E68-A86E-E6E042D0605D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52891D20-7D7E-469F-8502-CB356852F06E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52891D20-7D7E-469F-8502-CB356852F06E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52891D20-7D7E-469F-8502-CB356852F06E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52891D20-7D7E-469F-8502-CB356852F06E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
