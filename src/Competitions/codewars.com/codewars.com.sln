@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permutations", "Permutation
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Range Extraction", "Range Extraction\Range Extraction.csproj", "{893714CE-E01B-48BD-8E99-9F725C54DEBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delete occurrences of an element if it occurs more than n times", "Delete occurrences of an element if it occurs more than n times\Delete occurrences of an element if it occurs more than n times.csproj", "{0C713CB8-D756-4CD7-AF7D-5F832F660040}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product of consecutive Fib numbers", "Product of consecutive Fib numbers\Product of consecutive Fib numbers.csproj", "{B6287758-437A-4364-B364-1C192A14CA57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{893714CE-E01B-48BD-8E99-9F725C54DEBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{893714CE-E01B-48BD-8E99-9F725C54DEBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{893714CE-E01B-48BD-8E99-9F725C54DEBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C713CB8-D756-4CD7-AF7D-5F832F660040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C713CB8-D756-4CD7-AF7D-5F832F660040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C713CB8-D756-4CD7-AF7D-5F832F660040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C713CB8-D756-4CD7-AF7D-5F832F660040}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6287758-437A-4364-B364-1C192A14CA57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6287758-437A-4364-B364-1C192A14CA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6287758-437A-4364-B364-1C192A14CA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6287758-437A-4364-B364-1C192A14CA57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

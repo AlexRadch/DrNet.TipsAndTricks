@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
+// Permutations
+// https://www.codewars.com/kata/5254ca2719453dcc0b00027d
 class Permutations
 {
-    // https://www.codewars.com/kata/5254ca2719453dcc0b00027d
     public static List<string> SinglePermutations(string s) =>
         GetPermutations(s).Select(p => string.Join("", p)).ToList();
 

@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <RootNamespace>Range_Extraction</RootNamespace>
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
