@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validate Sudoku with size N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pyramid Slide Down", "Pyramid Slide Down\Pyramid Slide Down.csproj", "{8EB468E8-869F-46FE-96DD-5C2A0E939DD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breadcrumb Generator", "Breadcrumb Generator\Breadcrumb Generator.csproj", "{D40BF3C7-4BAB-4CAD-BCB8-6F8B09178A6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{8EB468E8-869F-46FE-96DD-5C2A0E939DD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EB468E8-869F-46FE-96DD-5C2A0E939DD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EB468E8-869F-46FE-96DD-5C2A0E939DD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D40BF3C7-4BAB-4CAD-BCB8-6F8B09178A6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40BF3C7-4BAB-4CAD-BCB8-6F8B09178A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40BF3C7-4BAB-4CAD-BCB8-6F8B09178A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40BF3C7-4BAB-4CAD-BCB8-6F8B09178A6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
