@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pyramid Slide Down", "Pyram
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breadcrumb Generator", "Breadcrumb Generator\Breadcrumb Generator.csproj", "{D40BF3C7-4BAB-4CAD-BCB8-6F8B09178A6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4 By 4 Skyscrapers", "4 By 4 Skyscrapers\4 By 4 Skyscrapers.csproj", "{B2555B85-D177-4CB5-BA82-0A8B15B69D61}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,10 @@ Global
 		{D40BF3C7-4BAB-4CAD-BCB8-6F8B09178A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D40BF3C7-4BAB-4CAD-BCB8-6F8B09178A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D40BF3C7-4BAB-4CAD-BCB8-6F8B09178A6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2555B85-D177-4CB5-BA82-0A8B15B69D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2555B85-D177-4CB5-BA82-0A8B15B69D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2555B85-D177-4CB5-BA82-0A8B15B69D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2555B85-D177-4CB5-BA82-0A8B15B69D61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
