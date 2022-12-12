@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breadcrumb Generator", "Bre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4 By 4 Skyscrapers", "4 By 4 Skyscrapers\4 By 4 Skyscrapers.csproj", "{B2555B85-D177-4CB5-BA82-0A8B15B69D61}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roman Numerals Helper", "Roman Numerals Helper\Roman Numerals Helper.csproj", "{CF5314A3-0231-481B-8749-8123AD853E22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,10 @@ Global
 		{B2555B85-D177-4CB5-BA82-0A8B15B69D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2555B85-D177-4CB5-BA82-0A8B15B69D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2555B85-D177-4CB5-BA82-0A8B15B69D61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF5314A3-0231-481B-8749-8123AD853E22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF5314A3-0231-481B-8749-8123AD853E22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF5314A3-0231-481B-8749-8123AD853E22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF5314A3-0231-481B-8749-8123AD853E22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
