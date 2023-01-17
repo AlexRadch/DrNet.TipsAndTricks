@@ -2,6 +2,7 @@
 
 // Josephus Survivor
 // https://www.codewars.com/kata/555624b601231dc7a400017a
+// simple counting
 public class JosephusSurvivor
 {
     public static int JosSurvivor(int n, int k)
