@@ -51,7 +51,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "All Balanced Parentheses", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ranking Poker Hands", "Ranking Poker Hands\Ranking Poker Hands.csproj", "{D3C0980C-59AC-4E82-BDFE-8118291BF474}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Make a spiral", "Make a spiral\Make a spiral.csproj", "{788B951A-A46D-4032-8BDA-941AE7039A23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Make a spiral", "Make a spiral\Make a spiral.csproj", "{788B951A-A46D-4032-8BDA-941AE7039A23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prime Streaming (PG-13)", "Prime Streaming (PG-13)\Prime Streaming (PG-13).csproj", "{29DABD4E-A3CF-498D-ADA7-EB7A2DF26C98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -159,6 +161,10 @@ Global
 		{788B951A-A46D-4032-8BDA-941AE7039A23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{788B951A-A46D-4032-8BDA-941AE7039A23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{788B951A-A46D-4032-8BDA-941AE7039A23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29DABD4E-A3CF-498D-ADA7-EB7A2DF26C98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29DABD4E-A3CF-498D-ADA7-EB7A2DF26C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29DABD4E-A3CF-498D-ADA7-EB7A2DF26C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29DABD4E-A3CF-498D-ADA7-EB7A2DF26C98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
