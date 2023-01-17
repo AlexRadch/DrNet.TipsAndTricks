@@ -2,8 +2,9 @@
 
 // Josephus Survivor
 // https://www.codewars.com/kata/555624b601231dc7a400017a
-// simple counting
-public class JosephusSurvivor
+//
+// Simple Counting
+public class JosephusSurvivor_SimpleCounting
 {
     public static int JosSurvivor(int n, int k)
     {
