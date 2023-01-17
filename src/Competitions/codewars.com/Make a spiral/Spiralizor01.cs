@@ -13,7 +13,7 @@ public class Spiralizor
         var steps = 1;
         while (InSquare(x) && InSquare(y) && IsFree(x + dx, y + dy))
         {
-            (result[y, x], x, = 1;
+            result[y, x] = 1;
             x += dx; y += dy;
             steps++;
         }
