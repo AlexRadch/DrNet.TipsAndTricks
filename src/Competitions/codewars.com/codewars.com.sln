@@ -5,51 +5,53 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permutations", "Permutations\Permutations.csproj", "{008327BD-BB9A-4036-A1E3-F4E32C1B3EFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Range Extraction", "Range Extraction\Range Extraction.csproj", "{893714CE-E01B-48BD-8E99-9F725C54DEBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Range Extraction", "Range Extraction\Range Extraction.csproj", "{893714CE-E01B-48BD-8E99-9F725C54DEBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delete occurrences of an element if it occurs more than n times", "Delete occurrences of an element if it occurs more than n times\Delete occurrences of an element if it occurs more than n times.csproj", "{0C713CB8-D756-4CD7-AF7D-5F832F660040}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Delete occurrences of an element if it occurs more than n times", "Delete occurrences of an element if it occurs more than n times\Delete occurrences of an element if it occurs more than n times.csproj", "{0C713CB8-D756-4CD7-AF7D-5F832F660040}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product of consecutive Fib numbers", "Product of consecutive Fib numbers\Product of consecutive Fib numbers.csproj", "{B6287758-437A-4364-B364-1C192A14CA57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product of consecutive Fib numbers", "Product of consecutive Fib numbers\Product of consecutive Fib numbers.csproj", "{B6287758-437A-4364-B364-1C192A14CA57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "First non-repeating character", "First non-repeating character\First non-repeating character.csproj", "{5706E863-8DE7-4E68-A86E-E6E042D0605D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "First non-repeating character", "First non-repeating character\First non-repeating character.csproj", "{5706E863-8DE7-4E68-A86E-E6E042D0605D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roman Numerals Decoder", "Roman Numerals Decoder\Roman Numerals Decoder.csproj", "{52891D20-7D7E-469F-8502-CB356852F06E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roman Numerals Decoder", "Roman Numerals Decoder\Roman Numerals Decoder.csproj", "{52891D20-7D7E-469F-8502-CB356852F06E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Replace With Alphabet Position", "Replace With Alphabet Position\Replace With Alphabet Position.csproj", "{2C9157EC-40D7-4627-9BB5-34367BE5F483}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Replace With Alphabet Position", "Replace With Alphabet Position\Replace With Alphabet Position.csproj", "{2C9157EC-40D7-4627-9BB5-34367BE5F483}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Count characters in your string", "Count characters in your string\Count characters in your string.csproj", "{871052E8-52EE-4E87-831A-FB5BDE1762CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Count characters in your string", "Count characters in your string\Count characters in your string.csproj", "{871052E8-52EE-4E87-831A-FB5BDE1762CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RGB To Hex Conversion", "RGB To Hex Conversion\RGB To Hex Conversion.csproj", "{580AEC04-E6FD-448B-928D-1FE64DDCE09A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGB To Hex Conversion", "RGB To Hex Conversion\RGB To Hex Conversion.csproj", "{580AEC04-E6FD-448B-928D-1FE64DDCE09A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tribonacci Sequence", "Tribonacci Sequence\Tribonacci Sequence.csproj", "{DD75CFD4-B2D8-4694-BFBF-2DCA130B2236}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tribonacci Sequence", "Tribonacci Sequence\Tribonacci Sequence.csproj", "{DD75CFD4-B2D8-4694-BFBF-2DCA130B2236}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Find The Parity Outlier", "Find The Parity Outlier\Find The Parity Outlier.csproj", "{9675ACE5-5636-4859-B12C-27D087CD4260}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Find The Parity Outlier", "Find The Parity Outlier\Find The Parity Outlier.csproj", "{9675ACE5-5636-4859-B12C-27D087CD4260}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vowel Count", "Vowel Count\Vowel Count.csproj", "{8507ADBA-CC1D-4797-84F6-CABEE2E29AE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vowel Count", "Vowel Count\Vowel Count.csproj", "{8507ADBA-CC1D-4797-84F6-CABEE2E29AE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Who likes it", "Who likes it\Who likes it.csproj", "{79E2118A-55A8-44DF-A341-DEDF2636A260}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Who likes it", "Who likes it\Who likes it.csproj", "{79E2118A-55A8-44DF-A341-DEDF2636A260}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remove the minimum", "Remove the minimum\Remove the minimum.csproj", "{6A57AF8E-1667-47AC-A26C-79A66644BC79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Remove the minimum", "Remove the minimum\Remove the minimum.csproj", "{6A57AF8E-1667-47AC-A26C-79A66644BC79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pick peaks", "Pick peaks\Pick peaks.csproj", "{4B7308BC-0E2C-4ACB-8D4E-AA062E5B583C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pick peaks", "Pick peaks\Pick peaks.csproj", "{4B7308BC-0E2C-4ACB-8D4E-AA062E5B583C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Josephus Permutation", "Josephus Permutation\Josephus Permutation.csproj", "{F6C91982-F79F-47BC-9839-F0ADBD9D327F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Josephus Permutation", "Josephus Permutation\Josephus Permutation.csproj", "{F6C91982-F79F-47BC-9839-F0ADBD9D327F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validate Sudoku with size NxN", "Validate Sudoku with size NxN\Validate Sudoku with size NxN.csproj", "{4B69B1FA-0274-429C-8CAA-A1C6AEED8981}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Validate Sudoku with size NxN", "Validate Sudoku with size NxN\Validate Sudoku with size NxN.csproj", "{4B69B1FA-0274-429C-8CAA-A1C6AEED8981}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pyramid Slide Down", "Pyramid Slide Down\Pyramid Slide Down.csproj", "{8EB468E8-869F-46FE-96DD-5C2A0E939DD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pyramid Slide Down", "Pyramid Slide Down\Pyramid Slide Down.csproj", "{8EB468E8-869F-46FE-96DD-5C2A0E939DD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Breadcrumb Generator", "Breadcrumb Generator\Breadcrumb Generator.csproj", "{D40BF3C7-4BAB-4CAD-BCB8-6F8B09178A6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Breadcrumb Generator", "Breadcrumb Generator\Breadcrumb Generator.csproj", "{D40BF3C7-4BAB-4CAD-BCB8-6F8B09178A6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4 By 4 Skyscrapers", "4 By 4 Skyscrapers\4 By 4 Skyscrapers.csproj", "{B2555B85-D177-4CB5-BA82-0A8B15B69D61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "4 By 4 Skyscrapers", "4 By 4 Skyscrapers\4 By 4 Skyscrapers.csproj", "{B2555B85-D177-4CB5-BA82-0A8B15B69D61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roman Numerals Helper", "Roman Numerals Helper\Roman Numerals Helper.csproj", "{CF5314A3-0231-481B-8749-8123AD853E22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roman Numerals Helper", "Roman Numerals Helper\Roman Numerals Helper.csproj", "{CF5314A3-0231-481B-8749-8123AD853E22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Human readable duration format", "Human readable duration format\Human readable duration format.csproj", "{3DF40A6A-2115-40FD-A999-B0D11EFC5BC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Human readable duration format", "Human readable duration format\Human readable duration format.csproj", "{3DF40A6A-2115-40FD-A999-B0D11EFC5BC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "All Balanced Parentheses", "All Balanced Parentheses\All Balanced Parentheses.csproj", "{E5B3A42E-B0AD-4E98-B38F-C389DBA1A260}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "All Balanced Parentheses", "All Balanced Parentheses\All Balanced Parentheses.csproj", "{E5B3A42E-B0AD-4E98-B38F-C389DBA1A260}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ranking Poker Hands", "Ranking Poker Hands\Ranking Poker Hands.csproj", "{D3C0980C-59AC-4E82-BDFE-8118291BF474}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ranking Poker Hands", "Ranking Poker Hands\Ranking Poker Hands.csproj", "{D3C0980C-59AC-4E82-BDFE-8118291BF474}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Make a spiral", "Make a spiral\Make a spiral.csproj", "{788B951A-A46D-4032-8BDA-941AE7039A23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,6 +155,10 @@ Global
 		{D3C0980C-59AC-4E82-BDFE-8118291BF474}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3C0980C-59AC-4E82-BDFE-8118291BF474}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3C0980C-59AC-4E82-BDFE-8118291BF474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{788B951A-A46D-4032-8BDA-941AE7039A23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{788B951A-A46D-4032-8BDA-941AE7039A23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{788B951A-A46D-4032-8BDA-941AE7039A23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{788B951A-A46D-4032-8BDA-941AE7039A23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
