@@ -9,16 +9,80 @@ namespace Solution
     {
 
         [Test]
+        public void Test00()
+        {
+            int input = 0;
+            int[,] expected = new int[0,0];
+
+            int[,] actual = Spiralizor.Spiralize(input);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Test01()
+        {
+            int input = 1;
+            int[,] expected = new int[,]{
+                {1},
+            };
+
+            int[,] actual = Spiralizor.Spiralize(input);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Test02()
+        {
+            int input = 2;
+            int[,] expected = new int[,]{
+                {1, 1},
+                {0, 1},
+            };
+
+            int[,] actual = Spiralizor.Spiralize(input);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Test03()
+        {
+            int input = 3;
+            int[,] expected = new int[,]{
+                {1, 1, 1},
+                {0, 0, 1},
+                {1, 1, 1},
+            };
+
+            int[,] actual = Spiralizor.Spiralize(input);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Test04()
+        {
+            int input = 4;
+            int[,] expected = new int[,]{
+                {1, 1, 1, 1},
+                {0, 0, 0, 1},
+                {1, 0, 0, 1},
+                {1, 1, 1, 1},
+            };
+
+            int[,] actual = Spiralizor.Spiralize(input);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void Test05()
         {
             int input = 5;
             int[,] expected = new int[,]{
-            {1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 1},
-            {1, 1, 1, 0, 1},
-            {1, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1}
-        };
+                {1, 1, 1, 1, 1},
+                {0, 0, 0, 0, 1},
+                {1, 1, 1, 0, 1},
+                {1, 0, 0, 0, 1},
+                {1, 1, 1, 1, 1}
+            };
 
             int[,] actual = Spiralizor.Spiralize(input);
             Assert.AreEqual(expected, actual);
@@ -29,15 +93,15 @@ namespace Solution
         {
             int input = 8;
             int[,] expected = new int[,]{
-            {1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 0, 1},
-            {1, 0, 0, 0, 0, 1, 0, 1},
-            {1, 0, 1, 0, 0, 1, 0, 1},
-            {1, 0, 1, 1, 1, 1, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1},
-        };
+                {1, 1, 1, 1, 1, 1, 1, 1},
+                {0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 1, 1, 1, 1, 1, 0, 1},
+                {1, 0, 0, 0, 0, 1, 0, 1},
+                {1, 0, 1, 0, 0, 1, 0, 1},
+                {1, 0, 1, 1, 1, 1, 0, 1},
+                {1, 0, 0, 0, 0, 0, 0, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1},
+            };
 
             int[,] actual = Spiralizor.Spiralize(input);
             Assert.AreEqual(expected, actual);
