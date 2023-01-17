@@ -24,4 +24,29 @@ public static class JosephusSurvivorTests
         testing(JosephusSurvivor.JosSurvivor(7, 300), 7);
         testing(JosephusSurvivor.JosSurvivor(300, 300), 265);
     }
+    //-----------------------
+    private static Random rnd = new Random();
+
+    public static int JosSurvivorSol(int n, int k)
+    {
+        if (n == 1)
+            return 1;
+        return (JosSurvivorSol(n - 1, k) + k - 1) % n + 1;
+    }
+    //-----------------------
+    private static void test2()
+    {
+        for (int i = 0; i < 40; i++)
+        {
+            int n = rnd.Next(1, 5000);
+            int k = rnd.Next(1, 5000);
+            testing(JosephusSurvivor.JosSurvivor(n, k), JosSurvivorSol(n, k));
+        }
+    }
+    [Test]
+    public static void RandomTests()
+    {
+        Console.WriteLine("Random Tests******* JosSurvivor");
+        test2();
+    }
 }
