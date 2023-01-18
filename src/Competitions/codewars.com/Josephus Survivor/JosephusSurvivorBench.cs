@@ -29,4 +29,7 @@ public class JosephusSurvivorBench
     [Benchmark]
     public void RecursionO() => JosephusSurvivor_RecursionO.JosSurvivor(N, K);
 
+    [Benchmark]
+    public void RecursionOLoop() => JosephusSurvivor_RecursionOLoop.JosSurvivor(N, K);
+
 }
