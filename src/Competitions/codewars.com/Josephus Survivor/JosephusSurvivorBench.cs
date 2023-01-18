@@ -7,7 +7,7 @@ public class JosephusSurvivorBench
     [Params(2000)]
     public int N;
 
-    //[Params(1, 3, 99, 999)]
+    //[Params(1, 3, 25, 99, 999)]
     [Params(25)]
     public int K;
 
@@ -25,4 +25,8 @@ public class JosephusSurvivorBench
 
     [Benchmark]
     public void Loop() => JosephusSurvivor_Loop.JosSurvivor(N, K);
+
+    [Benchmark]
+    public void RecursionO() => JosephusSurvivor_RecursionO.JosSurvivor(N, K);
+
 }

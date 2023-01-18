@@ -3,9 +3,12 @@
 public class JosephusSurvivor
 {
     public static int JosSurvivor(int n, int k)
-        //=> JosephusSurvivor_SimpleCounting.JosSurvivor(n, k);
-        //=> JosephusSurvivor_ListCounting.JosSurvivor(n, k);
-        //=> JosephusSurvivor_LinkedListCounting.JosSurvivor(n, k);
-        //=> JosephusSurvivor_Recursion.JosSurvivor(n, k);
-        => JosephusSurvivor_Loop.JosSurvivor(n, k);
+    {
+        return JosephusSurvivor_RecursionO.JosSurvivor(n, k);
+        //return JosephusSurvivor_Loop.JosSurvivor(n, k);
+        //return JosephusSurvivor_Recursion.JosSurvivor(n, k);
+        //return JosephusSurvivor_LinkedListCounting.JosSurvivor(n, k);
+        //return JosephusSurvivor_ListCounting.JosSurvivor(n, k);
+        //return JosephusSurvivor_SimpleCounting.JosSurvivor(n, k);
+    }
 }
