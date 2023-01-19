@@ -1,7 +1,7 @@
 ﻿// Josephus Survivor
 // https://www.codewars.com/kata/555624b601231dc7a400017a
 //
-// Recursion Optimized with 2 Loops https://e-maxx.ru/algo/joseph_problem
+// Recursion Optimized with 2 Loops https://en.wikipedia.org/wiki/Josephus_problem
 using System;
 using System.Numerics;
 
