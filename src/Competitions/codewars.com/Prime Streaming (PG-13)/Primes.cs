@@ -6,27 +6,6 @@ public class Primes
 {
     public static IEnumerable<int> Stream()
     {
-        yield return 2;
-
-        var primes = new List<int>();
-        var limitIndex = 0;
-        var limit = 3 * 3;
-        for (var candidate = 3; candidate > 0; candidate += 2)
-        {
-            if (limit <= candidate)
-            {
-                limit = primes[++limitIndex];
-                limit *= limit;
-            }
-
-            for (var i = 0; i < limitIndex; i++)
-                if (candidate % primes[i] == 0)
-                    goto NoPrime;
-
-            primes.Add(candidate);
-            yield return candidate;
-        NoPrime:
-            ;
-        }
+        return Primes_List.Stream();
     }
 }
