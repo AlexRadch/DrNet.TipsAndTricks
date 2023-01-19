@@ -9,9 +9,9 @@ public class JosephusSurvivor_RecursionO
 {
     public static int JosSurvivor(int n, int k) => k switch
     {
-        1 => n,
-        2 => 2 * (n - (1 << BitOperations.Log2((uint)n))) + 1,
-        _ => JosSurvivor0_ngk(n, k) + 1,
+        > 2 => JosSurvivor0_ngk(n, k) + 1,
+        2 => (n - (1 << BitOperations.Log2((uint)n))) * 2 + 1, // 2 * (n - Integer.highestOneBit(n)) + 1
+        _ => n, // 1
     };
 
     private static int JosSurvivor0_ngk(int n, int k)

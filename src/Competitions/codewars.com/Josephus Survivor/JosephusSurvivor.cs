@@ -4,7 +4,8 @@ public class JosephusSurvivor
 {
     public static int JosSurvivor(int n, int k)
     {
-        return JosephusSurvivor_RecursionOLoop.JosSurvivor(n, k);
+        return JosephusSurvivor_RecursionO2Loops.JosSurvivor(n, k);
+        //return JosephusSurvivor_RecursionOLoop.JosSurvivor(n, k);
         //return JosephusSurvivor_RecursionO.JosSurvivor(n, k);
         //return JosephusSurvivor_Loop.JosSurvivor(n, k);
         //return JosephusSurvivor_Recursion.JosSurvivor(n, k);
