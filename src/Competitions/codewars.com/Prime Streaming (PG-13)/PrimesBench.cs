@@ -15,4 +15,7 @@ public class PrimesBench
 
     [Benchmark]
     public void SieveO() => Primes_SieveO.Stream().Take(N).Count();
+
+    [Benchmark]
+    public void SieveO3() => Primes_SieveO3.Stream().Take(N).Count();
 }

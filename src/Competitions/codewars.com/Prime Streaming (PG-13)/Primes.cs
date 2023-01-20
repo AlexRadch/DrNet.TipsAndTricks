@@ -6,7 +6,8 @@ public class Primes
 {
     public static IEnumerable<int> Stream()
     {
-        return Primes_SieveO.Stream();
+        return Primes_SieveO3.Stream();
+        //return Primes_SieveO.Stream();
         //return Primes_Sieve.Stream();
         //return Primes_List.Stream();
     }
