@@ -7,12 +7,13 @@ using System.Collections.Generic;
 // Uses big Sieve (BitArray) to store primes and to qickly sieve candidates
 public class Primes_Sieve
 {
-    const int Max = 1 << 24;
+    const int Max = (1 << 24) - 1;
+
     public static IEnumerable<int> Stream()
     {
         yield return 2;
-        var sieve = new BitArray(ToSieveIndex(Max) + 1);
-
+    
+        var sieve = new BitArray(ToSieveIndex(Max + 1) + 1);
         for (var candidate = 3; ChechLimit(candidate); candidate += 2)
         {
             if (sieve[ToSieveIndex(candidate)]) continue; // Not prime

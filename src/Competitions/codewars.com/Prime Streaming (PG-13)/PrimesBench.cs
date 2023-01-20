@@ -7,9 +7,12 @@ public class PrimesBench
     [Params(100, 10_000, 1_000_000)]
     public int N;
 
+    //[Benchmark]
+    //public void List() => Primes_List.Stream().Take(N).Count();
+
     [Benchmark(Baseline = true)]
-    public void List() => Primes_List.Stream().Take(N).Count();
+    public void Sieve() => Primes_Sieve.Stream().Take(N).Count();
 
     [Benchmark]
-    public void Sieve() => Primes_Sieve.Stream().Take(N).Count();
+    public void SieveO() => Primes_SieveO.Stream().Take(N).Count();
 }
