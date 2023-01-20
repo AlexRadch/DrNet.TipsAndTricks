@@ -8,7 +8,7 @@ public class Faberge_CnkSum
 {
     public static BigInteger Height(int n, int m)
     {
-        //if (n > m) n = m;
+        if (n > m) n = m;
 
         BigInteger result = 0, Clk = 1; var l = m;
         for (int k = 1; k <= n; result += Clk, l--, k++)
