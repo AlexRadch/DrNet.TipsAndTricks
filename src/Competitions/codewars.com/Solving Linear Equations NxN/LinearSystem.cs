@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 
 // Solving Linear Equations N x N (Gauss, Part 1/2)
