@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 
 // Linear equations N x M, complete solution space, fraction representation
 // https://www.codewars.com/kata/56464cf3f982b2e10d000015
