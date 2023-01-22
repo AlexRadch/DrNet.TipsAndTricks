@@ -10,67 +10,80 @@ namespace LinearSystems
 
         public string Solve(string input)
         {
+            Console.WriteLine(input);
             var lines = input.Split("\n");
             var M = lines.Length;
             var matrix = new Fraction[M][];
             for (var rIndex = 0; rIndex < M; rIndex++)
-                matrix[rIndex] = lines[rIndex].Split().Select(cStr => (Fraction)int.Parse(cStr)).ToArray();
+                matrix[rIndex] = lines[rIndex].Split().Select(cStr => Fraction.Parse(cStr)).ToArray();
 
-            int C;
             var N = matrix[0].Length - 1;
+            var R = 0;
             for (var cIndex = 0; cIndex < N; cIndex++)
             {
-                for (var cIndex2 = cIndex; cIndex < N; cIndex2++)
+                for (var rIndex = R; rIndex < M; rIndex++)
                 {
-                    for (var rIndex = cIndex; rIndex < M; rIndex++)
-                        if (matrix[rIndex][cIndex].Numerator != 0)
-                        {
-                            (matrix[cIndex], matrix[rIndex]) = (matrix[rIndex], matrix[cIndex]);
-                            if (cIndex2 != cIndex)
-                                foreach (var row in matrix)
-                                    (row[cIndex], row[cIndex2]) = (row[cIndex2], row[cIndex]);
-                            goto Reduction;
-                        }
-                }
-                C = cIndex;
-                goto Phase2;
-            Reduction:
-                for (var rIndex = cIndex + 1; rIndex < M; rIndex++)
-                {
-                    var row1 = matrix[cIndex];
-                    var row2 = matrix[rIndex];
-                    var l = row2[cIndex] / row1[cIndex];
+                    var row = matrix[rIndex];
+                    if (row[cIndex].Numerator == 0)
+                        continue;
 
-                    row2[cIndex] = 0;
-                    for (var cIndex2 = cIndex + 1; cIndex2 <= N; cIndex2++)
-                        row2[cIndex2] -= row1[cIndex2] * l;
+                    (matrix[R], matrix[rIndex]) = (row, matrix[R]);
+
+                    var l = row[cIndex]; row[cIndex] = Fraction.One;
+                    {
+                        for (var cIndex2 = cIndex + 1; cIndex2 <= N; cIndex2++)
+                            rowC[cIndex2] /= l;
+                    }
+                    for (var rIndex = cIndex + 1; rIndex < M; rIndex++)
+                    {
+                        var row = matrix[rIndex];
+                        var l = row[cIndex]; row[cIndex] = Fraction.Zero;
+                        for (var cIndex2 = cIndex + 1; cIndex2 <= N; cIndex2++)
+                            row[cIndex2] -= rowC[cIndex2] * l;
+                    }
+                    break;
                 }
             }
 
-            C = N;
-            Phase2:
             for (var rIndex = C; rIndex < M; rIndex++)
                 if (matrix[rIndex][N].Numerator != 0)
                     return NoSolution;
 
-            for (var cIndex = C - 1; cIndex >= 0; cIndex--)
+            for (var cIndex = C - 1; cIndex > 0; cIndex--)
             {
-                var l = matrix[cIndex][N] /= matrix[cIndex][cIndex];
-                matrix[cIndex][cIndex] = 1;
-                for (var rIndex = cIndex - 1; rIndex >= 0; rIndex--)
+                var rowC = matrix[cIndex];
+                for (var rIndex = 0; rIndex < cIndex; rIndex++)
                 {
-                    matrix[rIndex][N] -= l * matrix[rIndex][cIndex];
-                    matrix[rIndex][cIndex] = 0;
+                    var row = matrix[rIndex];
+                    var l = row[cIndex]; row[cIndex] = Fraction.Zero;
+                    for (var cIndex2 = C; cIndex2 <= N; cIndex2++)
+                        row[cIndex2] -= rowC[cIndex2] * l;
                 }
             }
 
-            var answer = matrix.Select(row => row[N]).ToArray();
+            var answer = matrix.Select(row => row[N]).Take(C).Concat(Enumerable.Repeat(Fraction.Zero, N - C).ToArray());
             var result = $"SOL=({string.Join("; ", answer)})";
+
+            for (var cIndex = C; cIndex < N; cIndex++)
+            {
+                var row = new Fraction[N];
+                for (var cIndex2 = 0; cIndex2 < C; cIndex2++)
+                    row[cIndex2] = -matrix[cIndex2][cIndex];
+
+                for (var cIndex2 = C; cIndex2 < N; cIndex2++)
+                    row[cIndex2] = Fraction.Zero;
+
+                row[cIndex] = Fraction.One;
+
+                var line = $" + q{cIndex - C + 1} * ({string.Join("; ", row)})";
+
+                result += line;
+            }
 
             return result;
         }
 
-        const string NoSolution = "SOLUTION=NONE";
+        const string NoSolution = "SOL=NONE";
     }
 
     public struct Fraction
@@ -82,7 +95,6 @@ namespace LinearSystems
         {
             Numerator = numerator;
             Denominator = 1;
-            Simplify();
         }
 
         public Fraction(long numerator, long denominator)
@@ -110,16 +122,16 @@ namespace LinearSystems
 
         public override string ToString() => Denominator == 1 ? Numerator.ToString() : $"{Numerator}/{Denominator}";
 
+
         public static long GCD(long a, long b)
         {
             while (b != 0)
-            {
-                long temp = b;
-                b = a % b;
-                a = temp;
-            }
+                (a, b) = (b, a % b);
             return a;
         }
+
+        public static Fraction Zero { get; } = new Fraction(0);
+        public static Fraction One { get; } = new Fraction(1);
 
         public static implicit operator Fraction(long value) =>
             new Fraction(value);
@@ -133,5 +145,46 @@ namespace LinearSystems
             new Fraction(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
         public static Fraction operator /(Fraction a, Fraction b) =>
             new Fraction(a.Numerator * b.Denominator, a.Denominator * b.Numerator);
+
+        public static bool TryParse(string input, out Fraction fraction)
+        {
+            fraction = new Fraction();
+            if (string.IsNullOrEmpty(input))
+                return false;
+
+            string[] parts = input.Split('/');
+            switch (parts.Length)
+            {
+                case 1:
+                    {
+                        if (!long.TryParse(parts[0], out long numerator))
+                            return false;
+                        fraction = numerator;
+                        return true;
+                    }
+
+                case 2:
+                    {
+                        if (!long.TryParse(parts[0], out long numerator))
+                            return false;
+
+                        if (!long.TryParse(parts[1], out long denominator))
+                            return false;
+
+                        fraction = new Fraction(numerator, denominator);
+                        return true;
+                    }
+
+                default:
+                    return false;
+            }
+        }
+
+        public static Fraction Parse(string input) =>
+            TryParse(input, out Fraction fraction) ? fraction : 
+                throw new FormatException(
+                    "Input string is not in the correct format. " + 
+                    "It should be in the format 'numerator/denominator' or 'integer'");
+
     }
 }

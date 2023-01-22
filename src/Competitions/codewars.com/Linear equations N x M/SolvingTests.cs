@@ -101,6 +101,30 @@ namespace LinearSystems
             //if (testResult.Length > 0) Assert.Fail(testResult); else Console.WriteLine("'" + result + "' accepted!");
             if (result != "SOL=(3343180/9270107; 4197595/1324301; 20461200/9270107)") Assert.Fail(result); else Console.WriteLine("'" + result + "' accepted!");
         }
+
+        [Test]
+        public void TestAndVerify9()
+        {
+            LinearSystem ls = new LinearSystem();
+            string input = "1 2 0 0 7\n0 3 4 0 8\n0 0 5 6 9";
+            string result = ls.Solve(input);
+            //should be SOL=(97/15; 4/15; 9/5; 0) + q1 * (-16/5; 8/5; -6/5; 1)
+            //string testResult = Tests.testIt(input, result);
+            //if (testResult.Length > 0) Assert.Fail(testResult); else Console.WriteLine("'" + result + "' accepted!");
+            if (result != "SOL=(97/15; 4/15; 9/5; 0) + q1 * (-16/5; 8/5; -6/5; 1)") Assert.Fail(result); else Console.WriteLine("'" + result + "' accepted!");
+        }
+
+        [Test]
+        public void TestAndVerify10()
+        {
+            LinearSystem ls = new LinearSystem();
+            string input = "0 0 1 2 1\n1 2 1 3 1\n1 2 2 5 2";
+            string result = ls.Solve(input);
+            //should be SOL=(0; 1; 0; 0) + q1 * (-2; 0; 1; 0) + q2 * (-1; -2; 0; 1)
+            //string testResult = Tests.testIt(input, result);
+            //if (testResult.Length > 0) Assert.Fail(testResult); else Console.WriteLine("'" + result + "' accepted!");
+            if (result != "SOL=(0; 1; 0; 0) + q1 * (-2; 0; 1; 0) + q2 * (-1; -2; 0; 1)") Assert.Fail(result); else Console.WriteLine("'" + result + "' accepted!");
+        }
     }
 
 }

@@ -2,6 +2,7 @@ namespace LinearSystems
 {
     using NUnit.Framework;
     using System;
+    using System.Globalization;
     using System.Text.RegularExpressions;
 
     [TestFixture]
@@ -151,6 +152,11 @@ namespace LinearSystems
 
     public class SolvingTests
     {
+        public SolvingTests()
+        {
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        }
+
         [Test]
         public void TestAndVerify1()
         {
