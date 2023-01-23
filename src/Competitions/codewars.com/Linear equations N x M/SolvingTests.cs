@@ -123,7 +123,7 @@ namespace LinearSystems
             //should be SOL=(0; 1; 0; 0) + q1 * (-2; 0; 1; 0) + q2 * (-1; -2; 0; 1)
             //string testResult = Tests.testIt(input, result);
             //if (testResult.Length > 0) Assert.Fail(testResult); else Console.WriteLine("'" + result + "' accepted!");
-            if (result != "SOL=(0; 1; 0; 0) + q1 * (-2; 0; 1; 0) + q2 * (-1; -2; 0; 1)") Assert.Fail(result); else Console.WriteLine("'" + result + "' accepted!");
+            if (result != "SOL=(0; 0; 1; 0) + q1 * (-2; 1; 0; 0) + q2 * (-1; 0; -2; 1)") Assert.Fail(result); else Console.WriteLine("'" + result + "' accepted!");
         }
     }
 

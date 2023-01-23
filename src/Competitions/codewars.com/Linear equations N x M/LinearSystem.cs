@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 // Linear equations N x M, complete solution space, fraction representation
 // https://www.codewars.com/kata/56464cf3f982b2e10d000015
@@ -7,76 +9,79 @@ namespace LinearSystems
 {
     public class LinearSystem
     {
-
         public string Solve(string input)
         {
             Console.WriteLine(input);
+
             var lines = input.Split("\n");
             var M = lines.Length;
-            var matrix = new Fraction[M][];
+            var matrix = new List<BigRational[]>(M);
             for (var rIndex = 0; rIndex < M; rIndex++)
-                matrix[rIndex] = lines[rIndex].Split().Select(cStr => Fraction.Parse(cStr)).ToArray();
+                matrix.Add(lines[rIndex].Split().Select(cStr => BigRational.Parse(cStr)).ToArray());
+            var N = M >= 0 ? matrix[0].Length - 1 : 0;
 
-            var N = matrix[0].Length - 1;
-            var R = 0;
-            for (var cIndex = 0; cIndex < N; cIndex++)
+            int R = 0;
+            for (int cIndex = 0; cIndex < N && R < M; cIndex++)
             {
-                for (var rIndex = R; rIndex < M; rIndex++)
+                var rowR = matrix[R];
+                if (rowR[cIndex].Numerator != 0)
+                    goto Reduction;
+
+                for (var rIndex = R + 1; rIndex < M; rIndex++)
                 {
                     var row = matrix[rIndex];
                     if (row[cIndex].Numerator == 0)
                         continue;
 
-                    (matrix[R], matrix[rIndex]) = (row, matrix[R]);
-
-                    var l = row[cIndex]; row[cIndex] = Fraction.One;
-                    {
-                        for (var cIndex2 = cIndex + 1; cIndex2 <= N; cIndex2++)
-                            rowC[cIndex2] /= l;
-                    }
-                    for (var rIndex = cIndex + 1; rIndex < M; rIndex++)
-                    {
-                        var row = matrix[rIndex];
-                        var l = row[cIndex]; row[cIndex] = Fraction.Zero;
-                        for (var cIndex2 = cIndex + 1; cIndex2 <= N; cIndex2++)
-                            row[cIndex2] -= rowC[cIndex2] * l;
-                    }
-                    break;
+                    (rowR, _) = (matrix[R], matrix[rIndex]) = (row, rowR);
+                    goto Reduction;
                 }
-            }
+                continue;
 
-            for (var rIndex = C; rIndex < M; rIndex++)
-                if (matrix[rIndex][N].Numerator != 0)
-                    return NoSolution;
-
-            for (var cIndex = C - 1; cIndex > 0; cIndex--)
-            {
-                var rowC = matrix[cIndex];
-                for (var rIndex = 0; rIndex < cIndex; rIndex++)
+            Reduction:
                 {
-                    var row = matrix[rIndex];
-                    var l = row[cIndex]; row[cIndex] = Fraction.Zero;
-                    for (var cIndex2 = C; cIndex2 <= N; cIndex2++)
-                        row[cIndex2] -= rowC[cIndex2] * l;
+                    var k = rowR[cIndex]; rowR[cIndex] = BigRational.One;
+                    for (var cIndex2 = cIndex + 1; cIndex2 <= N; cIndex2++)
+                        rowR[cIndex2] /= k;
                 }
+                for (var rIndex = 0; rIndex < M; rIndex++)
+                {
+                    if (rIndex == R)
+                        continue;
+                    var row = matrix[rIndex];
+                    var k = row[cIndex]; row[cIndex] = 0;
+                    for (var cIndex2 = cIndex + 1; cIndex2 <= N; cIndex2++)
+                        row[cIndex2] -= rowR[cIndex2] * k;
+                }
+                R++;
             }
 
-            var answer = matrix.Select(row => row[N]).Take(C).Concat(Enumerable.Repeat(Fraction.Zero, N - C).ToArray());
-            var result = $"SOL=({string.Join("; ", answer)})";
-
-            for (var cIndex = C; cIndex < N; cIndex++)
+            while (M > R)
             {
-                var row = new Fraction[N];
-                for (var cIndex2 = 0; cIndex2 < C; cIndex2++)
-                    row[cIndex2] = -matrix[cIndex2][cIndex];
+                if (matrix[--M][N].Numerator != 0)
+                    return NoSolution;
+                matrix.RemoveAt(M);
+            }
 
-                for (var cIndex2 = C; cIndex2 < N; cIndex2++)
-                    row[cIndex2] = Fraction.Zero;
+            for (var cIndex = 0; cIndex < N; cIndex++)
+            {
+                if (cIndex < M && matrix[cIndex][cIndex].Numerator != 0)
+                    continue;
+                var row = new BigRational[N + 1];
+                row[cIndex] = -1;
+                matrix.Insert(cIndex, row);
+                M++;
+            }
 
-                row[cIndex] = Fraction.One;
+            var result = $"SOL=({string.Join("; ", matrix.Select(row => row[N]))})";
 
-                var line = $" + q{cIndex - C + 1} * ({string.Join("; ", row)})";
-
+            R = 0;
+            for (var cIndex = 0; cIndex < N; cIndex++)
+            {
+                if (matrix[cIndex][cIndex].Numerator != -1)
+                    continue;
+                R++;
+                var line = $" + q{R} * ({string.Join("; ", matrix.Select(row => -row[cIndex]))})";
                 result += line;
             }
 
@@ -86,69 +91,63 @@ namespace LinearSystems
         const string NoSolution = "SOL=NONE";
     }
 
-    public struct Fraction
+    public struct BigRational
     {
-        public long Numerator { get; private set; }
-        public long Denominator { get; private set; }
+        private BigInteger denominator;
+        public BigInteger Numerator { get; }
+        public BigInteger Denominator => denominator + 1;
 
-        public Fraction(long numerator)
+        public BigRational(BigInteger numerator)
         {
             Numerator = numerator;
-            Denominator = 1;
+            denominator = 0;
         }
 
-        public Fraction(long numerator, long denominator)
+        public BigRational(BigInteger numerator, BigInteger denominator)
         {
             if (denominator == 0)
                 throw new DivideByZeroException();
 
-            Numerator = numerator;
-            Denominator = denominator;
-            Simplify();
-        }
-
-        private void Simplify()
-        {
-            long gcd = GCD(Numerator, Denominator);
-            Numerator /= gcd;
-            Denominator /= gcd;
-
-            if (Denominator < 0)
+            BigInteger gcd = BigInteger.GreatestCommonDivisor(numerator, denominator);
+            numerator /= gcd;
+            denominator /= gcd;
+            if (denominator < 0)
             {
-                Numerator = -Numerator;
-                Denominator = -Denominator;
+                numerator = -numerator;
+                denominator = -denominator;
             }
+            Numerator = numerator;
+            this.denominator = denominator - 1;
         }
 
-        public override string ToString() => Denominator == 1 ? Numerator.ToString() : $"{Numerator}/{Denominator}";
+        public override string ToString() => denominator == 0 ? Numerator.ToString() : $"{Numerator}/{Denominator}";
 
+        public static BigRational Zero { get; } = new BigRational(0);
+        public static BigRational One { get; } = new BigRational(1);
 
-        public static long GCD(long a, long b)
+        public static implicit operator BigRational(byte value) => new BigRational(value);
+        public static implicit operator BigRational(sbyte value) => new BigRational(value);
+        public static implicit operator BigRational(short value) => new BigRational(value);
+        public static implicit operator BigRational(ushort value) => new BigRational(value);
+        public static implicit operator BigRational(int value) => new BigRational(value);
+        public static implicit operator BigRational(uint value) => new BigRational(value);
+        public static implicit operator BigRational(long value) => new BigRational(value);
+        public static implicit operator BigRational(ulong value) => new BigRational(value);
+        public static implicit operator BigRational(BigInteger value) => new BigRational(value);
+        public static BigRational operator +(BigRational a) => a;
+        public static BigRational operator -(BigRational a) => new BigRational(-a.Numerator, a.Denominator);
+        public static BigRational operator +(BigRational a, BigRational b) =>
+            new BigRational(a.Numerator * b.Denominator + a.Denominator * b.Numerator, a.Denominator * b.Denominator);
+        public static BigRational operator -(BigRational a, BigRational b) =>
+            new BigRational(a.Numerator * b.Denominator - a.Denominator * b.Numerator, a.Denominator * b.Denominator);
+        public static BigRational operator *(BigRational a, BigRational b) =>
+            new BigRational(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
+        public static BigRational operator /(BigRational a, BigRational b) =>
+            new BigRational(a.Numerator * b.Denominator, a.Denominator * b.Numerator);
+
+        public static bool TryParse(string input, out BigRational fraction)
         {
-            while (b != 0)
-                (a, b) = (b, a % b);
-            return a;
-        }
-
-        public static Fraction Zero { get; } = new Fraction(0);
-        public static Fraction One { get; } = new Fraction(1);
-
-        public static implicit operator Fraction(long value) =>
-            new Fraction(value);
-        public static Fraction operator +(Fraction a) => a;
-        public static Fraction operator -(Fraction a) => new Fraction(-a.Numerator, a.Denominator);
-        public static Fraction operator +(Fraction a, Fraction b) =>
-            new Fraction(a.Numerator * b.Denominator + a.Denominator * b.Numerator, a.Denominator * b.Denominator);
-        public static Fraction operator -(Fraction a, Fraction b) =>
-            new Fraction(a.Numerator * b.Denominator - a.Denominator * b.Numerator, a.Denominator * b.Denominator);
-        public static Fraction operator *(Fraction a, Fraction b) =>
-            new Fraction(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
-        public static Fraction operator /(Fraction a, Fraction b) =>
-            new Fraction(a.Numerator * b.Denominator, a.Denominator * b.Numerator);
-
-        public static bool TryParse(string input, out Fraction fraction)
-        {
-            fraction = new Fraction();
+            fraction = new BigRational();
             if (string.IsNullOrEmpty(input))
                 return false;
 
@@ -157,7 +156,7 @@ namespace LinearSystems
             {
                 case 1:
                     {
-                        if (!long.TryParse(parts[0], out long numerator))
+                        if (!BigInteger.TryParse(parts[0], out BigInteger numerator))
                             return false;
                         fraction = numerator;
                         return true;
@@ -165,13 +164,13 @@ namespace LinearSystems
 
                 case 2:
                     {
-                        if (!long.TryParse(parts[0], out long numerator))
+                        if (!BigInteger.TryParse(parts[0], out BigInteger numerator))
                             return false;
 
-                        if (!long.TryParse(parts[1], out long denominator))
+                        if (!BigInteger.TryParse(parts[1], out BigInteger denominator))
                             return false;
 
-                        fraction = new Fraction(numerator, denominator);
+                        fraction = new BigRational(numerator, denominator);
                         return true;
                     }
 
@@ -180,11 +179,11 @@ namespace LinearSystems
             }
         }
 
-        public static Fraction Parse(string input) =>
-            TryParse(input, out Fraction fraction) ? fraction : 
+        public static BigRational Parse(string input) =>
+            TryParse(input, out BigRational fraction) ? fraction : 
                 throw new FormatException(
-                    "Input string is not in the correct format. " + 
-                    "It should be in the format 'numerator/denominator' or 'integer'");
+                    "Input string is not in the correct format. " +
+                    "It should be in the format 'numerator/denominator' or 'BigInteger'");
 
     }
 }

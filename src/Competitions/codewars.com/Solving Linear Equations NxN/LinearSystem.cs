@@ -19,8 +19,8 @@ namespace LinearSystems
 
             for (var cIndex = 0; cIndex < N; cIndex++)
             {
-                var rowC = matrix[cIndex];
-                if (rowC[cIndex] != 0)
+                var rowR = matrix[cIndex];
+                if (rowR[cIndex] != 0)
                     goto Reduction;
 
                 for (var rIndex = cIndex + 1; rIndex < N; rIndex++)
@@ -28,16 +28,16 @@ namespace LinearSystems
                     var row = matrix[rIndex];
                     if (row[cIndex] == 0)
                         continue;
-                    (matrix[cIndex], matrix[rIndex]) = (rowC, row) = (row, rowC);
+                    (rowR, _) = (matrix[cIndex], matrix[rIndex]) = (row, rowR);
                     goto Reduction;
                 }
                 return NoSolution;
 
             Reduction:
                 {
-                    var k = rowC[cIndex]; rowC[cIndex] = 1;
+                    var k = rowR[cIndex]; rowR[cIndex] = 1;
                     for (var cIndex2 = cIndex + 1; cIndex2 <= N; cIndex2++)
-                        rowC[cIndex2] /= k;
+                        rowR[cIndex2] /= k;
                 }
 
                 for (var rIndex = 0; rIndex < N; rIndex++)
@@ -47,20 +47,9 @@ namespace LinearSystems
                     var row = matrix[rIndex];
                     var k = row[cIndex]; row[cIndex] = 0;
                     for (var cIndex2 = cIndex + 1; cIndex2 <= N; cIndex2++)
-                        row[cIndex2] -= rowC[cIndex2] * k;
+                        row[cIndex2] -= rowR[cIndex2] * k;
                 }
             }
-
-            //for (var cIndex = N - 1; cIndex > 0; cIndex--)
-            //{
-            //    var a = matrix[cIndex][N];
-            //    for (var rIndex = 0; rIndex < cIndex; rIndex++)
-            //    {
-            //        var row = matrix[rIndex];
-            //        row[N] -= a * row[cIndex];
-            //        row[cIndex] = 0;
-            //    }
-            //}
 
             var answer = matrix.Select(row => row[N]).ToArray();
 
