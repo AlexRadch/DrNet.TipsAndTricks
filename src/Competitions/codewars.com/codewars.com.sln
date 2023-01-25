@@ -67,6 +67,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Texas Holdem Hands", "Texas
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternationalMorseCode", "International Morse Code\InternationalMorseCode.csproj", "{6273C82B-86E1-4F90-B18D-AF3CEA07A871}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thue-Morse Sequence", "Thue-Morse Sequence\Thue-Morse Sequence.csproj", "{A3721FC2-78EA-4506-A805-F74697A96812}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -201,6 +203,10 @@ Global
 		{6273C82B-86E1-4F90-B18D-AF3CEA07A871}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6273C82B-86E1-4F90-B18D-AF3CEA07A871}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6273C82B-86E1-4F90-B18D-AF3CEA07A871}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3721FC2-78EA-4506-A805-F74697A96812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3721FC2-78EA-4506-A805-F74697A96812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3721FC2-78EA-4506-A805-F74697A96812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3721FC2-78EA-4506-A805-F74697A96812}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
