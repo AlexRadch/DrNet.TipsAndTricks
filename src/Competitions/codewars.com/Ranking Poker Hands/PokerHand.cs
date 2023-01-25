@@ -76,16 +76,7 @@ public readonly struct PokerHand : IComparable<PokerHand>
         return 0;
     }
 
-    public static int CardValue(char valueChar) => valueChar switch
-    {
-        >= '2' and <= '9' => valueChar - '0',
-        'T' => 10,
-        'J' => 11,
-        'Q' => 12,
-        'K' => 13,
-        'A' => 14,
-        _ => 0
-    };
+    public static int CardValue(char valueChar) => "23456789TJQKA".IndexOf(valueChar) + 2;
 
     private HandRank EvaluteHandRank(IEnumerable<char> suits)
     {
