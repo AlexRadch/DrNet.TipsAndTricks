@@ -65,6 +65,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linear equations N x M", "L
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Texas Holdem Hands", "Texas Holdem Hands\Texas Holdem Hands.csproj", "{5725E0BE-7472-4904-B26C-7D499239B4EE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternationalMorseCode", "International Morse Code\InternationalMorseCode.csproj", "{6273C82B-86E1-4F90-B18D-AF3CEA07A871}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -195,6 +197,10 @@ Global
 		{5725E0BE-7472-4904-B26C-7D499239B4EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5725E0BE-7472-4904-B26C-7D499239B4EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5725E0BE-7472-4904-B26C-7D499239B4EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6273C82B-86E1-4F90-B18D-AF3CEA07A871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6273C82B-86E1-4F90-B18D-AF3CEA07A871}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6273C82B-86E1-4F90-B18D-AF3CEA07A871}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6273C82B-86E1-4F90-B18D-AF3CEA07A871}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
