@@ -75,7 +75,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decode the Morse code", "De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decode the Morse code Advanced", "Decode the Morse code Advanced\Decode the Morse code Advanced.csproj", "{1BD13F11-5E0F-424E-BE63-BF5D3B519CED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tiny ThreePass Compiler", "Tiny ThreePass Compiler\Tiny ThreePass Compiler.csproj", "{2E4C81EC-B824-47E7-B42F-CBF0C8A587B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tiny ThreePass Compiler", "Tiny ThreePass Compiler\Tiny ThreePass Compiler.csproj", "{2E4C81EC-B824-47E7-B42F-CBF0C8A587B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BECOME IMMORTAL", "BECOME IMMORTAL\BECOME IMMORTAL.csproj", "{60FA24CD-372F-4171-8737-842B88B75004}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -231,6 +233,10 @@ Global
 		{2E4C81EC-B824-47E7-B42F-CBF0C8A587B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E4C81EC-B824-47E7-B42F-CBF0C8A587B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E4C81EC-B824-47E7-B42F-CBF0C8A587B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60FA24CD-372F-4171-8737-842B88B75004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60FA24CD-372F-4171-8737-842B88B75004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60FA24CD-372F-4171-8737-842B88B75004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60FA24CD-372F-4171-8737-842B88B75004}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
