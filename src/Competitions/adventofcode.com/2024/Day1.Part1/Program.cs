@@ -1,5 +1,17 @@
 ﻿
 {
+    TextReader input = File.OpenText("input1.txt");
+
+    List<int> list1 = [];
+    List<int> list2 = [];
+    ReadInput(input, list1, list2);
+
+    var result = Solve(list1, list2);
+
+    Console.WriteLine($"{result}");
+}
+
+{
     TextReader input = File.OpenText("input2.txt");
 
     List<int> list1 = [];
