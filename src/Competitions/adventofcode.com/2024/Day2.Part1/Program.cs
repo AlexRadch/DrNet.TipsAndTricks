@@ -33,13 +33,19 @@ static int Solve(IEnumerable<IEnumerable<int>> reports)
 
 static bool IsSafe<TReport>(TReport report)
     where TReport : IEnumerable<int>
-{
-    var distances = report.Zip(report.Skip(1))
-        .Select(pair => pair.Second - pair.First);
-
-    var sign = Math.Sign(distances.First());
-
-    return distances
+    => report.Zip(report.Skip(1))
+        .Select(pair => pair.Second - pair.First) is { } distances
+    && Math.Sign(distances.First()) is { } sign
+    && distances
         .Select(distance => Math.Sign(distance) == sign && Math.Abs(distance) <= 3)
         .All(safe => safe);
-}
+//{
+//    var distances = report.Zip(report.Skip(1))
+//        .Select(pair => pair.Second - pair.First);
+
+//    var sign = Math.Sign(distances.First());
+
+//    return distances
+//        .Select(distance => Math.Sign(distance) == sign && Math.Abs(distance) <= 3)
+//        .All(safe => safe);
+//}
