@@ -1,5 +1,4 @@
-﻿
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 {
     TextReader input = File.OpenText("input1.txt");

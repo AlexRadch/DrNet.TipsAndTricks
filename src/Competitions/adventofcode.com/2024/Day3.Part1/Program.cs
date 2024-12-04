@@ -1,5 +1,4 @@
-﻿
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 {
     var input = File.OpenText("input1.txt").ReadToEnd();
