@@ -18,12 +18,15 @@ using System.Text.RegularExpressions;
 }
 
 static long Solve(string input) =>
-    MulRegex().Matches(input)
+    MulRegex().Matches(DontRegex().Replace(input, "_"))
         .Select(match => long.Parse(match.Groups[1].Value) * long.Parse(match.Groups[2].Value))
         .Sum();
 
 partial class Program
 {
+    [GeneratedRegex(@"don't\(\).*?((do\(\))|$)", RegexOptions.Singleline)]
+    private static partial Regex DontRegex();
+
     [GeneratedRegex(@"mul\((\d{1,3}),(\d{1,3})\)")]
     private static partial Regex MulRegex();
 }
