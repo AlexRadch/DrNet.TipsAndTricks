@@ -28,14 +28,10 @@ static int Solve<TMatrix, TString>(TMatrix matrix, TString word)
     where TMatrix: IList<string>
     where TString: IEnumerable<char>
 {
-    var c = word.First();
-    var subWord = word.Skip(1);
-
     var starts = Enumerable.Range(0, matrix.Count)
-            .SelectMany(row => Enumerable.Range(0, matrix[row].Length).Select(column => (Row: row, Column: column)));
-    starts = starts.Where(pos => matrix[pos.Row][pos.Column] == c);
+            .SelectMany(row => Enumerable.Range(0, matrix[0].Length).Select(column => (Row: row, Column: column)));
 
-    var counts = starts.Select(pos => SolveFromPos(matrix, pos.Row, pos.Column, subWord));
+    var counts = starts.Select(pos => SolveFromPos(matrix, pos.Row, pos.Column, word));
     return counts.Sum();
 }
 
@@ -50,13 +46,13 @@ static int SolveFromPos<TMatrix, TString>(TMatrix matrix, int row, int column, T
         var nextColumn = column;
         foreach (var c in word)
         {
-            nextRow += rowDelta;
-            nextColumn += columnDelta;
             if (!(nextRow >= 0 && nextRow < matrix.Count && nextColumn >= 0 && nextColumn < matrix[nextRow].Length))
                 goto Next;
             if (matrix[nextRow][nextColumn] != c)
                 goto Next;
 
+            nextRow += rowDelta;
+            nextColumn += columnDelta;
         }
         result++;
     Next:
