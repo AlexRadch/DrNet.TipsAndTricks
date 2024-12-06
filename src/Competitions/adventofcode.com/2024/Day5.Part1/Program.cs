@@ -1,4 +1,6 @@
-﻿
+﻿//  --- Day 5: Print Queue ---
+//  https://adventofcode.com/2024/day/5
+
 using System.Data;
 using Rule = (int PageBefore, int PageAfter);
 

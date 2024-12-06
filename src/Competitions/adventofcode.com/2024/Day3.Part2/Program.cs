@@ -1,4 +1,7 @@
-﻿using System.Text.RegularExpressions;
+﻿//  --- Day 3: Mull It Over ---
+//  https://adventofcode.com/2024/day/3
+
+using System.Text.RegularExpressions;
 
 {
     var input = File.OpenText("input1.txt").ReadToEnd();

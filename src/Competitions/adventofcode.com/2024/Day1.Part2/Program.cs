@@ -1,4 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿//  --- Day 1: Historian Hysteria ---
+//  https://adventofcode.com/2024/day/1
+
+using System.Runtime.InteropServices;
 
 {
     TextReader input = File.OpenText("input1.txt");
