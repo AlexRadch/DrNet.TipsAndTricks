@@ -32,7 +32,7 @@ static int Solve<TMap>(TMap map) where TMap : IList<char[]>
     int dy = -1; int dx = 0;
 
     var result = 0;
-    while (y >= 0 && y < height && x >= 0 && x < width)
+    while (true)
     {
         if (map[y][x] != 'X')
             result++;
