@@ -22,11 +22,11 @@ using Equation = (long Value, long[] Numbers);
 static IEnumerable<Equation> ReadEquations(TextReader input)
 {
     while (input.ReadLine() is string line && line.Split(':') is { } equParts && equParts.Length >= 2)
-        yield return new Equation(long.Parse(equParts[0]), 
+        yield return new Equation(long.Parse(equParts[0]),
             equParts[1].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray());
 }
 
-const string Operations = "+*";
+const string Operations = "+*|";
 
 static long Solve<TEquations>(TEquations equations) where TEquations : IEnumerable<Equation>
     => equations.Select(SolveEquation).Sum();
@@ -40,8 +40,10 @@ static long SolveEquation(Equation equation)
         {
             if (operation == '+')
                 result += value;
-            else
+            else if (operation == '*')
                 result *= value;
+            else
+                result = result * (int)Math.Pow(10, Math.Ceiling(Math.Log10(value + 1.1))) + value;
         }
         if (result == equation.Value)
             return equation.Value;
@@ -59,5 +61,5 @@ static IEnumerable<IEnumerable<T>> MultiCombinations<T>(IEnumerable<T> source, i
 
     foreach (var item in source)
         foreach (var combination in MultiCombinations(source, length - 1))
-            yield return combination.Prepend(item) ;
+            yield return combination.Prepend(item);
 }
