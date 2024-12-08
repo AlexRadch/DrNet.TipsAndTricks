@@ -43,7 +43,7 @@ static long SolveEquation(Equation equation)
             else if (operation == '*')
                 result *= value;
             else
-                result = result * (int)Math.Pow(10, Math.Ceiling(Math.Log10(value + 1.1))) + value;
+                result = result * (int)Math.Pow(10, Math.Ceiling(Math.Log10(value + 1))) + value;
         }
         if (result == equation.Value)
             return equation.Value;
