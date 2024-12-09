@@ -52,19 +52,14 @@ static IEnumerable<Point> SolvePair(Point p1, Point p2, int height, int width)
 {
     var dy = p2.Y - p1.Y;
     var dx = p2.X - p1.X;
-    
-    {
-        if (p1.Y - dy is { } row && row >= 0 && row < height &&
-            p1.X - dx is { } column && column >= 0 && column < width)
-        {
-            yield return new Point(row, column);
-        }
-    }
-    {
-        if (p2.Y + dy is { } row && row >= 0 && row < height &&
-            p2.X + dx is { } column && column >= 0 && column < width)
-        {
-            yield return new Point(row, column);
-        }
-    }
+
+    var y = p1.Y - dy;
+    var x = p1.X - dx;
+    if (y >= 0 && y < height && x >= 0 && x < width)
+        yield return new Point(y, x);
+
+    y = p2.Y + dy;
+    x = p2.X + dx;
+    if (y >= 0 && y < height && x >= 0 && x < width)
+        yield return new Point(y, x);
 }
