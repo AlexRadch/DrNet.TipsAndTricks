@@ -47,6 +47,7 @@ static long SolveStartEnd<TMap>(TMap map, ref int start, ref int end, ref int en
     offset += map[start * 2];
 
     var len = map[start * 2 + 1];
+    start++;
     while (len > 0 && start <= end)
     {
         var minLen = Math.Min(len, endLength);
@@ -62,7 +63,6 @@ static long SolveStartEnd<TMap>(TMap map, ref int start, ref int end, ref int en
         }
     }
 
-    start++;
     return sum;
 }
 
