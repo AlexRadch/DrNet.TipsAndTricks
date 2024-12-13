@@ -48,12 +48,20 @@ static long Solve<TMap>(TMap map) where TMap : IReadOnlyList<string>
 
         void AddToRegion(int x2, int y2)
         {
-            if (IsBoundary(x2, y2) || regionsMap[y2 * width + x2] is not null)
+            if (!IsSame(x2, y2) || regionsMap[y2 * width + x2] is not null)
                 return;
 
             regionsMap[y2 * width + x2] = region;
             region.Area++;
-            region.Perimeter += GetPerimeter(x2, y2);
+
+            if (!IsSame(x2, y2 - 1))
+                region.Perimeter++;
+            if (!IsSame(x2 + 1, y2))
+                region.Perimeter++;
+            if (!IsSame(x2, y2 + 1))
+                region.Perimeter++;
+            if (!IsSame(x2 - 1, y2))
+                region.Perimeter++;
 
             AddToRegion(x2, y2 - 1);
             AddToRegion(x2 + 1, y2);
@@ -61,14 +69,8 @@ static long Solve<TMap>(TMap map) where TMap : IReadOnlyList<string>
             AddToRegion(x2 - 1, y2);
         }
 
-        bool IsBoundary(int x2, int y2) =>
-            y2 < 0 || y2 >= height || x2 < 0 || x2 >= width || map[y][x] != map[y2][x2];
-
-        int GetPerimeter(int x2, int y2) =>
-            (IsBoundary(x2, y2 - 1) ? 1 : 0) +
-            (IsBoundary(x2 + 1, y2) ? 1 : 0) +
-            (IsBoundary(x2, y2 + 1) ? 1 : 0) +
-            (IsBoundary(x2 - 1, y2) ? 1 : 0);
+        bool IsSame(int x2, int y2) =>
+            y2 >= 0 && y2 < height && x2 >= 0 && x2 < width && map[y][x] == map[y2][x2];
     }
 }
 
