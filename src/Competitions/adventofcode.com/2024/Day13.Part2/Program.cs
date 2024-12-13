@@ -3,7 +3,7 @@
 
 using System.Text.RegularExpressions;
 
-using Machine = ((int DX, int DY) ButtonA, (int DX, int DY) ButtonB, (int X, int Y) Prize);
+using Machine = ((int DX, int DY) ButtonA, (int DX, int DY) ButtonB, (long X, long Y) Prize);
 
 {
     var machines = File.ReadLines("input1.txt")
@@ -15,6 +15,7 @@ using Machine = ((int DX, int DY) ButtonA, (int DX, int DY) ButtonB, (int X, int
 
     var result = costs.Sum();
 
+    Console.WriteLine($"875318608908");
     Console.WriteLine($"{result}");
 }
 
@@ -28,6 +29,7 @@ using Machine = ((int DX, int DY) ButtonA, (int DX, int DY) ButtonB, (int X, int
 
     var result = costs.Sum();
 
+    Console.WriteLine($"107487112929999");
     Console.WriteLine($"{result}");
 }
 
@@ -40,10 +42,10 @@ static Machine ReadMachine(IEnumerable<string> lines)
     return new Machine(
         (int.Parse(matches1[0].Value), int.Parse(matches1[1].Value)),
         (int.Parse(matches2[0].Value), int.Parse(matches2[1].Value)),
-        (int.Parse(matches3[0].Value), int.Parse(matches3[1].Value)));
+        (int.Parse(matches3[0].Value) + 10_000_000_000_000, int.Parse(matches3[1].Value) + 10_000_000_000_000));
 }
 
-static int Solve(Machine machine)
+static long Solve(Machine machine)
 {
     checked
     {
