@@ -20,6 +20,24 @@
     Console.WriteLine($"{result}");
 }
 
+{
+    var map = File.ReadLines("input4.txt").ToArray();
+    var result = Solve(map);
+    Console.WriteLine($"{result}");
+}
+
+{
+    var map = File.ReadLines("input5.txt").ToArray();
+    var result = Solve(map);
+    Console.WriteLine($"{result}");
+}
+
+{
+    var map = File.ReadLines("input6.txt").ToArray();
+    var result = Solve(map);
+    Console.WriteLine($"{result}");
+}
+
 static long Solve<TMap>(TMap map) where TMap : IReadOnlyList<string>
 {
     var height = map.Count;
@@ -32,7 +50,7 @@ static long Solve<TMap>(TMap map) where TMap : IReadOnlyList<string>
         for (var x = 0; x < width; x++)
             AddArea(x, y);
 
-    var costs = regions.Select(r => (long)r.Area * r.Perimeter);
+    var costs = regions.Select(r => (long)r.Area * r.Sides);
     var result = costs.Sum();
     return result;
 
@@ -53,7 +71,20 @@ static long Solve<TMap>(TMap map) where TMap : IReadOnlyList<string>
 
             regionsMap[y2 * width + x2] = region;
             region.Area++;
-            region.Perimeter += GetPerimeter(x2, y2);
+
+            var top = IsBoundary(x2, y2 - 1);
+            var right = IsBoundary(x2 + 1, y2);
+            var bottom = IsBoundary(x2, y2 + 1);
+            var left = IsBoundary(x2 - 1, y2);
+
+            if (top && (left || !IsBoundary(x2 - 1, y2 - 1)))
+                region.Sides++;
+            if (right && (top || !IsBoundary(x2 + 1, y2 - 1)))
+                region.Sides++;
+            if (bottom && (right || !IsBoundary(x2 + 1, y2 + 1)))
+                region.Sides++;
+            if (left && (bottom || !IsBoundary(x2 - 1, y2 + 1)))
+                region.Sides++;
 
             AddToRegion(x2, y2 - 1);
             AddToRegion(x2 + 1, y2);
@@ -63,18 +94,11 @@ static long Solve<TMap>(TMap map) where TMap : IReadOnlyList<string>
 
         bool IsBoundary(int x2, int y2) =>
             y2 < 0 || y2 >= height || x2 < 0 || x2 >= width || map[y][x] != map[y2][x2];
-
-        int GetPerimeter(int x2, int y2) =>
-            (IsBoundary(x2, y2 - 1) ? 1 : 0) +
-            (IsBoundary(x2 + 1, y2) ? 1 : 0) +
-            (IsBoundary(x2, y2 + 1) ? 1 : 0) +
-            (IsBoundary(x2 - 1, y2) ? 1 : 0);
     }
 }
-
 
 record class Region
 {
     public int Area { get; set; }
-    public int Perimeter { get; set; }
+    public int Sides { get; set; }
 }
