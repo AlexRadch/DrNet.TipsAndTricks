@@ -37,7 +37,7 @@ static int Solve<TMap>(TMap map) where TMap : IList<string>
         (sx, sy)
     };
 
-    while(toProcess.Count > 0)
+    while (toProcess.Count > 0)
     {
         (var x, var y) = toProcess.First();
         toProcess.Remove((x, y));
@@ -53,14 +53,27 @@ static int Solve<TMap>(TMap map) where TMap : IList<string>
             UpdateLeftCost((x - 1, y), costs.ToLeft + 1);
     }
 
-    if (points.TryGetValue((ex, ey), out var result))
-        return result.Min;
+    {
+        if (points.TryGetValue((ex, ey), out var costs))
+        {
+            toProcess.Add((ex, ey));
+            var min = costs.Min;
+            if (costs.Up <= min)
+                BackTraceFromUp(ex, ey + 1, costs.Up);
+            if (costs.Right <= min)
+                BackTraceFromRight(ex - 1, ey, costs.Right);
+            if (costs.Down <= min)
+                BackTraceFromDown(ex, ey - 1, costs.Down);
+            if (costs.Left <= min)
+                BackTraceFromLeft(ex + 1, ey, costs.Left);
+        }
+    }
 
-    return -1;
+    return toProcess.Count;
 
     void UpdateUpCost(Point point, int value)
     {
-        if (value >= endCost)
+        if (value > endCost)
             return;
 
         if (!points.TryGetValue(point, out var costs))
@@ -80,7 +93,7 @@ static int Solve<TMap>(TMap map) where TMap : IList<string>
 
     void UpdateRightCost(Point point, int value)
     {
-        if (value >= endCost)
+        if (value > endCost)
             return;
 
         if (!points.TryGetValue(point, out var costs))
@@ -100,7 +113,7 @@ static int Solve<TMap>(TMap map) where TMap : IList<string>
 
     void UpdateDownCost(Point point, int value)
     {
-        if (value >= endCost)
+        if (value > endCost)
             return;
 
         if (!points.TryGetValue(point, out var costs))
@@ -120,7 +133,7 @@ static int Solve<TMap>(TMap map) where TMap : IList<string>
 
     void UpdateLeftCost(Point point, int value)
     {
-        if (value >= endCost)
+        if (value > endCost)
             return;
 
         if (!points.TryGetValue(point, out var costs))
@@ -137,13 +150,77 @@ static int Solve<TMap>(TMap map) where TMap : IList<string>
                 endCost = costs.Min;
         }
     }
-}
 
+    void BackTraceFromUp(int x, int y, int cost)
+    {
+        if (!points.TryGetValue((x, y), out var costs))
+            return;
+        toProcess.Add((x, y));
+
+        if (costs.Up + 1 <= cost)
+            BackTraceFromUp(x, y + 1, costs.Up);
+        if (costs.Right + Costs.TurnConst + 1 <= cost)
+            BackTraceFromRight(x - 1, y, costs.Right);
+        if (costs.Left + Costs.TurnConst + 1 <= cost)
+            BackTraceFromLeft(x + 1, y, costs.Left);
+        if (costs.Down + Costs.TurnConst + Costs.TurnConst + 1 <= cost)
+            BackTraceFromDown(x, y - 1, costs.Down);
+    }
+
+    void BackTraceFromRight(int x, int y, int cost)
+    {
+        if (!points.TryGetValue((x, y), out var costs))
+            return;
+        toProcess.Add((x, y));
+
+        if (costs.Right + 1 <= cost)
+            BackTraceFromRight(x - 1, y, costs.Right);
+        if (costs.Up + Costs.TurnConst + 1 <= cost)
+            BackTraceFromUp(x, y + 1, costs.Up);
+        if (costs.Down + Costs.TurnConst + 1 <= cost)
+            BackTraceFromDown(x, y - 1, costs.Down);
+        if (costs.Left + Costs.TurnConst + Costs.TurnConst + 1 <= cost)
+            BackTraceFromLeft(x + 1, y, costs.Left);
+    }
+
+    void BackTraceFromDown(int x, int y, int cost)
+    {
+        if (!points.TryGetValue((x, y), out var costs))
+            return;
+        toProcess.Add((x, y));
+
+        if (costs.Down + 1 <= cost)
+            BackTraceFromDown(x, y - 1, costs.Down);
+        if (costs.Right + Costs.TurnConst + 1 <= cost)
+            BackTraceFromRight(x - 1, y, costs.Right);
+        if (costs.Left + Costs.TurnConst + 1 <= cost)
+            BackTraceFromLeft(x + 1, y, costs.Left);
+        if (costs.Up + Costs.TurnConst + Costs.TurnConst + 1 <= cost)
+            BackTraceFromUp(x, y + 1, costs.Up);
+    }
+
+    void BackTraceFromLeft(int x, int y, int cost)
+    {
+        if (!points.TryGetValue((x, y), out var costs))
+            return;
+        toProcess.Add((x, y));
+
+        if (costs.Left + 1 <= cost)
+            BackTraceFromLeft(x + 1, y, costs.Left);
+        if (costs.Up + Costs.TurnConst + 1 <= cost)
+            BackTraceFromUp(x, y + 1, costs.Up);
+        if (costs.Down + Costs.TurnConst + 1 <= cost)
+            BackTraceFromDown(x, y - 1, costs.Down);
+        if (costs.Right + Costs.TurnConst + Costs.TurnConst + 1 <= cost)
+            BackTraceFromRight(x - 1, y, costs.Right);
+    }
+
+}
 
 record class Costs
 {
     public const int MaxValue = int.MaxValue / 2;
-    const int TurnConst = 1000;
+    public const int TurnConst = 1000;
 
     public int Up { get; set; } = MaxValue;
     public int Right { get; set; } = MaxValue;
