@@ -8,7 +8,7 @@ using UsedSpace = (System.Collections.Generic.List<int> Files, int FreeLen);
     var map = reader.ReadLine()!.Select(c => c - '0').ToArray();
 
     long result = Solve(map);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -16,7 +16,7 @@ using UsedSpace = (System.Collections.Generic.List<int> Files, int FreeLen);
     var map = reader.ReadLine()!.Select(c => c - '0').ToArray();
 
     long result = Solve(map);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static long Solve<TMap>(TMap map) where TMap : IReadOnlyList<int>

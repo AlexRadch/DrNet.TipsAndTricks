@@ -15,7 +15,7 @@ using System.Text;
 
     var result = Solve(robots, 11, 7);
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -25,7 +25,7 @@ using System.Text;
 
     var result = Solve(robots, 101, 103);
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static Robot ReadRobot(string line)

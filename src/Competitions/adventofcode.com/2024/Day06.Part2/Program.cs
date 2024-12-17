@@ -10,7 +10,7 @@ using Position = (int Row, int Column);
     var map = ReadMap(reader).ToArray();
 
     var result = Solve(map);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -18,7 +18,7 @@ using Position = (int Row, int Column);
     var map = ReadMap(reader).ToArray();
 
     var result = Solve(map);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static IEnumerable<char[]> ReadMap(TextReader input)

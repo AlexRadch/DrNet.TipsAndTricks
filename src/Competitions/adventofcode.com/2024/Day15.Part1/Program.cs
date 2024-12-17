@@ -15,7 +15,7 @@ using System.Text;
     var coordinates = BoxCoordinates(map);
     var result = coordinates.Sum();
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -29,7 +29,7 @@ using System.Text;
     var coordinates = BoxCoordinates(map);
     var result = coordinates.Sum();
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -43,7 +43,7 @@ using System.Text;
     var coordinates = BoxCoordinates(map);
     var result = coordinates.Sum();
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static void MakeMoves(char[][] map, string moves)

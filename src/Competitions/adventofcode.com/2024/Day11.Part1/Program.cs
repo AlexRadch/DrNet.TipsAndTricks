@@ -13,7 +13,7 @@ using System.Numerics;
 
     var result = stones.Count;
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -26,7 +26,7 @@ using System.Numerics;
 
     var result = stones.Count;
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static TStones Solve<TStones>(TStones stones) where TStones : LinkedList<BigInteger>

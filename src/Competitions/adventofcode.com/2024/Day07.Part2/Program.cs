@@ -8,7 +8,7 @@ using Equation = (long Value, long[] Numbers);
     var equations = ReadEquations(reader).ToArray();
 
     var result = Solve(equations);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -16,7 +16,7 @@ using Equation = (long Value, long[] Numbers);
     var equations = ReadEquations(reader).ToArray();
 
     var result = Solve(equations);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static IEnumerable<Equation> ReadEquations(TextReader input)

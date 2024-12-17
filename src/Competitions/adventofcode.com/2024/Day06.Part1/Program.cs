@@ -6,7 +6,7 @@
     var map = ReadMap(reader).ToArray();
 
     var result = Solve(map);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -14,7 +14,7 @@
     var map = ReadMap(reader).ToArray();
 
     var result = Solve(map);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static IEnumerable<char[]> ReadMap(TextReader input)

@@ -5,19 +5,19 @@
 {
     var map = File.ReadLines("input1.txt").ToArray();
     var result = Solve(map);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
     var map = File.ReadLines("input2.txt").ToArray();
     var result = Solve(map);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
     var map = File.ReadLines("input3.txt").ToArray();
     var result = Solve(map);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static long Solve<TMap>(TMap map) where TMap : IReadOnlyList<string>

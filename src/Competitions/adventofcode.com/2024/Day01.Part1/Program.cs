@@ -10,7 +10,7 @@
 
     var result = Solve(list1, list2);
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -22,7 +22,7 @@
 
     var result = Solve(list1, list2);
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static void ReadInput<TCollection>(TextReader input, TCollection list1, TCollection list2) where TCollection: ICollection<int>

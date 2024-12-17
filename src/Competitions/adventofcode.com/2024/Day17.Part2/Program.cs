@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text.RegularExpressions;
 using Registers = (System.Numerics.BigInteger A, System.Numerics.BigInteger B, System.Numerics.BigInteger C);
 
-for (int i = 1; i <= 7; i++)
+for (int i = 3; i <= 3; i++)
 {
     using var reader = File.OpenText($"input{i}.txt");
 
@@ -13,9 +13,9 @@ for (int i = 1; i <= 7; i++)
     reader.ReadLine();
     var program = ReadProgram(reader);
 
-    var result = Run(registers, program);
+    var result = Solve(registers, program);
 
-    Console.WriteLine($"{string.Join(',', result)}");
+    Console.WriteLine(result);
     Console.WriteLine();
 }
 
@@ -25,11 +25,39 @@ static BigInteger ReadRegister(TextReader reader) =>
 static IReadOnlyList<int> ReadProgram(TextReader reader) =>
     IntRegex().Matches(reader.ReadLine()!).Select(match => int.Parse(match.Value)).ToArray();
 
+static BigInteger Solve(Registers registers, IReadOnlyList<int> program)
+{
+    BigInteger result = 0;
+    while (true)
+    {
+        for (int i = 0; i <= 8; i++)
+        {
+            if (i == 8)
+                return -1;
+
+            var output = Run((result, registers.B, registers.C), program);
+
+            var count = output.Count();
+            if (count > program.Count)
+                return -1;
+
+            if (program[^count] == output.First())
+            {
+                if (count == program.Count)
+                    return result;
+                break;
+            }
+            result++;
+        }
+        result *= 8;
+    }
+}
+
 static IEnumerable<int> Run(Registers registers, IReadOnlyList<int> program)
 {
     var result = new List<int>();
     var ip = 0;
-    while ( ip >=0 && ip < program.Count - 1)
+    while (ip >= 0 && ip < program.Count - 1)
     {
         switch (program[ip])
         {
@@ -79,7 +107,6 @@ static IEnumerable<int> Run(Registers registers, IReadOnlyList<int> program)
         _ => throw new InvalidDataException(),
     };
 }
-
 
 static class Extensions
 {

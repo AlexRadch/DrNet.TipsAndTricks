@@ -6,7 +6,7 @@
 
     var result = Solve(ReadReports(input));
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -14,7 +14,7 @@
 
     var result = Solve(ReadReports(input));
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static IEnumerable<IEnumerable<int>> ReadReports(TextReader input)

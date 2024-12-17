@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
     var result = Solve(input);
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -16,7 +16,7 @@ using System.Text.RegularExpressions;
 
     var result = Solve(input);
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static long Solve(string input) =>

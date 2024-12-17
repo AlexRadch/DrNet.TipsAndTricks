@@ -9,7 +9,7 @@ using MapLetter = (char Letter, (int Y, int X) Point);
     var map = ReadMap(reader).ToArray();
 
     var result = Solve(map);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -17,7 +17,7 @@ using MapLetter = (char Letter, (int Y, int X) Point);
     var map = ReadMap(reader).ToArray();
 
     var result = Solve(map);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static IEnumerable<char[]> ReadMap(TextReader input)

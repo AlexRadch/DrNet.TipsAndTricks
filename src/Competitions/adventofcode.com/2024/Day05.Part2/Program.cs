@@ -9,7 +9,7 @@ using Rule = (int PageBefore, int PageAfter);
     var updates = ReadUpdates(reader).ToArray();
 
     var result = Solve(rules, updates);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -18,7 +18,7 @@ using Rule = (int PageBefore, int PageAfter);
     var updates = ReadUpdates(reader).ToArray();
 
     var result = Solve(rules, updates);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static IEnumerable<Rule> ReadRules(TextReader input)

@@ -6,7 +6,7 @@
 
     var result = Solve(matrix, "MAS");
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -14,7 +14,7 @@
 
     var result = Solve(matrix, "MAS");
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static string[] ReadMatrix(TextReader input) =>

@@ -12,7 +12,7 @@ using PointHeight = ((int X, int Y) Point, int H);
         .ToArray();
 
     int result = Solve(map);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -21,7 +21,7 @@ using PointHeight = ((int X, int Y) Point, int H);
         .ToArray();
 
     int result = Solve(map);
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static int Solve<TMap>(TMap map) where TMap : IReadOnlyList<IReadOnlyList<int>>

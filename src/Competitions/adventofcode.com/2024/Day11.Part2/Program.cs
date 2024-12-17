@@ -16,7 +16,7 @@ using System.Numerics;
 
     var result = stones.Select(pair => pair.Value).Sum();
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -32,7 +32,7 @@ using System.Numerics;
 
     var result = stones.Select(pair => pair.Value).Sum();
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static IDictionary<BigInteger, long> Solve<TStones>(TStones stones) where TStones : IDictionary<BigInteger, long>

@@ -15,7 +15,7 @@ using Machine = ((int DX, int DY) ButtonA, (int DX, int DY) ButtonB, (int X, int
 
     var result = costs.Sum();
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 {
@@ -28,7 +28,7 @@ using Machine = ((int DX, int DY) ButtonA, (int DX, int DY) ButtonB, (int X, int
 
     var result = costs.Sum();
 
-    Console.WriteLine($"{result}");
+    Console.WriteLine(result);
 }
 
 static Machine ReadMachine(IEnumerable<string> lines)

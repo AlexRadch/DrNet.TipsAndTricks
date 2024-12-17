@@ -13,7 +13,7 @@ using Point = (int X, int Y);
 
 var result = Solve(robots, 11, 7, 100);
 
-Console.WriteLine($"{result}");
+Console.WriteLine(result);
 }
 
 {
@@ -23,7 +23,7 @@ var robots = File.ReadLines("input2.txt")
 
 var result = Solve(robots, 101, 103, 100);
 
-Console.WriteLine($"{result}");
+Console.WriteLine(result);
 }
 
 static Robot ReadRobot(string line)

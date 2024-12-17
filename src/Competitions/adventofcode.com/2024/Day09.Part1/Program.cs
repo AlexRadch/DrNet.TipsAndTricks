@@ -5,16 +5,16 @@
     var reader = File.OpenText("input1.txt");
     var map = reader.ReadLine()!.Select(c => c - '0').ToArray();
 
-    long result = Solve(map);
-    Console.WriteLine($"{result}");
+    var result = Solve(map);
+    Console.WriteLine(result);
 }
 
 {
     var reader = File.OpenText("input2.txt");
     var map = reader.ReadLine()!.Select(c => c - '0').ToArray();
 
-    long result = Solve(map);
-    Console.WriteLine($"{result}");
+    var result = Solve(map);
+    Console.WriteLine(result);
 }
 
 static long Solve<TMap>(TMap map) where TMap : IReadOnlyList<int>
