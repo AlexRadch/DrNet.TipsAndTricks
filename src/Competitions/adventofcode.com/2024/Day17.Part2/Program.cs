@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text.RegularExpressions;
 using Registers = (System.Numerics.BigInteger A, System.Numerics.BigInteger B, System.Numerics.BigInteger C);
 
-for (int i = 3; i <= 3; i++)
+for (int i = 1; i <= 3; i++)
 {
     using var reader = File.OpenText($"input{i}.txt");
 
@@ -28,29 +28,24 @@ static IReadOnlyList<int> ReadProgram(TextReader reader) =>
 static BigInteger Solve(Registers registers, IReadOnlyList<int> program)
 {
     BigInteger result = 0;
-    while (true)
+    for (int c = 1; c <= program.Count; c++)
     {
-        for (int i = 0; i <= 8; i++)
+        result *= 8;
+        while (true)
         {
-            if (i == 8)
-                return -1;
-
             var output = Run((result, registers.B, registers.C), program);
 
             var count = output.Count();
-            if (count > program.Count)
+            if (count > c)
                 return -1;
-
-            if (program[^count] == output.First())
+            if (count == c && output.First() == program[^count])
             {
-                if (count == program.Count)
-                    return result;
                 break;
             }
             result++;
         }
-        result *= 8;
     }
+    return result;
 }
 
 static IEnumerable<int> Run(Registers registers, IReadOnlyList<int> program)
