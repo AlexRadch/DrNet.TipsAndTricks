@@ -2,20 +2,21 @@
 //  https://adventofcode.com/2024/day/18
 
 using System.Data;
+
 using Point = (int X, int Y);
 
 {
     var bytes = ReadBytes("input1.txt").ToArray();
 
-    var result = Solve(bytes, 7, 7, 13);
-    Console.WriteLine($"{result.X},{result.Y}");
+    var (x, y) = Solve(bytes, 7, 7, 13);
+    Console.WriteLine($"{x},{y}");
 }
 
 {
     var bytes = ReadBytes("input2.txt").ToArray();
 
-    var result = Solve(bytes, 71, 71, 1025);
-    Console.WriteLine($"{result.X},{result.Y}");
+    var (x, y) = Solve(bytes, 71, 71, 1025);
+    Console.WriteLine($"{x},{y}");
 }
 
 static IEnumerable<Point> ReadBytes(string fileName) =>
