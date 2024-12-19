@@ -45,7 +45,6 @@
     Console.WriteLine(result);
 }
 
-
 static IEnumerable<string> ReadDesigns(TextReader reader) =>
     reader.ReadLines().Select(s => s.Trim().ToLower());
 
