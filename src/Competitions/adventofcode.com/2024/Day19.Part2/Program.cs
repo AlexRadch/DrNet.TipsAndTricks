@@ -1,8 +1,6 @@
 ﻿// ---Day 19: Linen Layout ---
 //  https://adventofcode.com/2024/day/19
 
-using System;
-
 {
     using var reader = File.OpenText("input1.txt");
     var towels = reader.ReadLines().First().Split(',', StringSplitOptions.TrimEntries);
