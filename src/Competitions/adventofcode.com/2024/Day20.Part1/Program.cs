@@ -4,17 +4,17 @@
 using Point = (int X, int Y);
 using Cheat = ((int X, int Y) P1, (int X, int Y) P2, int Save);
 
-ProcessFile("input1.txt", cheat => cheat.Save > 0);
-ProcessFile("input2.txt", cheat => cheat.Save >= 100);
+ProcessFile("input1.txt", 1);
+ProcessFile("input2.txt", 100);
 
-static void ProcessFile(string filePath, Func<Cheat, bool> filter)
+static void ProcessFile(string filePath, int minSave)
 {
     using var reader = File.OpenText(filePath);
     var map = ReadMap(reader).ToArray();
 
-    var cheats = Solve(map);
+    var cheats = Solve(map).Where(cheat => cheat.Save >= minSave);
 
-    var result = cheats.Count(filter);
+    var result = cheats.Count();
     Console.WriteLine(result);
 }
 

@@ -4,10 +4,10 @@
 using Point = (int X, int Y);
 using Cheat = ((int X, int Y) P1, (int X, int Y) P2, int Save);
 
-ProcessFile("input1.txt", 20, cheat => cheat.Save >= 50);
-ProcessFile("input2.txt", 20, cheat => cheat.Save >= 100);
+ProcessFile("input1.txt", 20, 50);
+ProcessFile("input2.txt", 20, 100);
 
-static void ProcessFile(string filePath, int maxDuration, Func<Cheat, bool> filter)
+static void ProcessFile(string filePath, int maxDuration, int minSave)
 {
     using var reader = File.OpenText(filePath);
     var map = ReadMap(reader).ToArray();
@@ -15,22 +15,17 @@ static void ProcessFile(string filePath, int maxDuration, Func<Cheat, bool> filt
     var height = map.Length;
     var width = map[0].Length;
 
-    var cheats = Solve(map, maxDuration)
-        .Where(filter)
-        //.OrderBy(cheat => cheat.Save)
-        ;
+    var cheats = Solve(map, maxDuration, minSave)
+        .Where(cheat => cheat.Save >= minSave);
 
     var result = cheats.Count();
     Console.WriteLine(result);
-
-    //var group = cheats.GroupBy(cheat => cheat.Save, (key, cheats) => (key, cheats.Count()));
-    //Console.WriteLine(group.Count());
 }
 
 static IEnumerable<string> ReadMap(TextReader reader) =>
     reader.ReadLines();
 
-static IEnumerable<Cheat> Solve<TMap>(TMap map, int maxDuration) where TMap : IEnumerable<string>
+static IEnumerable<Cheat> Solve<TMap>(TMap map, int maxDuration, int minSave) where TMap : IEnumerable<string>
 {
     var height = map.Count();
     var width = map.First().Length;
@@ -41,15 +36,15 @@ static IEnumerable<Cheat> Solve<TMap>(TMap map, int maxDuration) where TMap : IE
     var costMap = map.Select(row => row.Select(value => value == '#' ? -1 : int.MaxValue / 2).ToArray()).ToArray();
     PaveTrack(costMap, start, end);
 
-    return PaveCheats(costMap, maxDuration)
-        .GroupBy(cheat => (cheat.P1, cheat.P2), (key, cheats) => (key.P1, key.P2, cheats.Max(cheat => cheat.Save)));
+    return PaveCheats(costMap, maxDuration, minSave);
 }
 
-static IEnumerable<Cheat> PaveCheats<TMap>(TMap map, int maxDuration) where TMap : IList<IList<int>> =>
-    map.SelectMany((row, y) => row.SelectMany((value, x) => value >= 0 ? PointCheats(map, (x, y), maxDuration) : []));
+static IEnumerable<Cheat> PaveCheats<TMap>(TMap map, int maxDuration, int minSave) where TMap : IList<IList<int>> =>
+    map.SelectMany((row, y) => row.SelectMany((value, x) => value >= 0 ? PointCheats(map, (x, y), maxDuration, minSave) : []));
 
 
-static IEnumerable<Cheat> PointCheats<TMap>(TMap map, Point p, int maxDuration) where TMap : IList<IList<int>>
+static IEnumerable<Cheat> PointCheats<TMap>(TMap map, Point p, int maxDuration, int minSave)
+    where TMap : IList<IList<int>>
 {
     var height = map.Count;
     var width = map.First().Count;
@@ -59,7 +54,9 @@ static IEnumerable<Cheat> PointCheats<TMap>(TMap map, Point p, int maxDuration) 
         yield break;
 
     for (var dy = -maxDuration; dy <= maxDuration; dy++)
-        for (var dx = -maxDuration; dx <= maxDuration; dx++)
+    {
+        int ady = Math.Abs(dy);
+        for (var dx = -maxDuration + ady; dx <= maxDuration - ady; dx++)
         {
             var nx = p.X + dx;
             if (nx < 0 || nx >= width)
@@ -69,41 +66,15 @@ static IEnumerable<Cheat> PointCheats<TMap>(TMap map, Point p, int maxDuration) 
             if (ny < 0 || ny >= height)
                 continue;
 
-            var duration = Math.Abs(dx) + Math.Abs(dy);
-            if (duration > maxDuration)
+            var save = map[ny][nx];
+            if (save < 0)
                 continue;
 
-            if (map[ny][nx] < 0)
-                continue;
-
-            var save = map[ny][nx] - cost - duration;
-            if (save > 0)
+            save -= cost + ady + Math.Abs(dx);
+            if (save >= minSave && save > 0)
                 yield return ((p.X, p.Y), (nx, ny), save);
         }
-
-    //Point[] points = [(p.X, p.Y - 1), (p.X + 1, p.Y), (p.X, p.Y + 1), (p.X - 1, p.Y)];
-
-    //foreach (var (sx, sy) in points)
-    //{
-    //    if (map[sy][sx] >= 0)
-    //        continue;
-
-    //    for (var dy = -(maxDuration - 1); dy <= maxDuration - 1; dy++)
-    //        for (var dx = -(maxDuration - 1); dx <= maxDuration - 1; dx++)
-    //        {
-    //            var duration = Math.Abs(dx) + Math.Abs(dy);
-    //            if (duration > maxDuration - 1)
-    //                continue;
-
-    //            var (nx, ny) = (sx + dx, sy + dy);
-    //            if (nx < 0 || ny < 0 || nx >= width || ny >= height || map[ny][nx] < 0)
-    //                continue;
-
-    //            var save = map[ny][nx] - cost - duration - 1;
-    //            if (save > 0)
-    //                yield return ((sx, sy), (nx, ny), save);
-    //        }
-    //}
+    }
 }
 
 static void PaveTrack<TMap>(TMap map, Point start, Point end) where TMap : IList<IList<int>>
