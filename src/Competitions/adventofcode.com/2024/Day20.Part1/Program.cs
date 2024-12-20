@@ -4,23 +4,17 @@
 using Point = (int X, int Y);
 using Cheat = ((int X, int Y) P1, (int X, int Y) P2, int Save);
 
+ProcessFile("input1.txt", cheat => cheat.Save > 0);
+ProcessFile("input2.txt", cheat => cheat.Save >= 100);
+
+static void ProcessFile(string filePath, Func<Cheat, bool> filter)
 {
-    using var reader = File.OpenText("input1.txt");
+    using var reader = File.OpenText(filePath);
     var map = ReadMap(reader).ToArray();
 
     var cheats = Solve(map);
 
-    var result = cheats.Where(cheat => cheat.Save > 0).Count();
-    Console.WriteLine(result);
-}
-
-{
-    using var reader = File.OpenText("input2.txt");
-    var map = ReadMap(reader).ToArray();
-
-    var cheats = Solve(map);
-
-    var result = cheats.Where(cheat => cheat.Save >= 100).Count();
+    var result = cheats.Count(filter);
     Console.WriteLine(result);
 }
 
@@ -32,22 +26,18 @@ static IEnumerable<Cheat> Solve<TMap>(TMap map) where TMap : IEnumerable<string>
     var height = map.Count();
     var width = map.First().Length;
 
-    var start = map.FlatMap().Where(point => point.Value == 'S').First().Position;
-    var end = map.FlatMap().Where(point => point.Value == 'E').First().Position;
+    var start = map.FlatMap().First(point => point.Value == 'S').Position;
+    var end = map.FlatMap().First(point => point.Value == 'E').Position;
 
     var costMap = map.Select(row => row.Select(value => value == '#' ? -1 : int.MaxValue / 2).ToArray()).ToArray();
     PaveTrack(costMap, start, end);
 
-    var cheats = PaveCheats(costMap);
-
-    return cheats;
+    return PaveCheats(costMap);
 }
 
-static IEnumerable<Cheat> PaveCheats<TMap>(TMap map) where TMap : IList<IList<int>>
-{
-    var cheats = map.SelectMany((row, y) => row.SelectMany((value, x) => value >= 0 ? PointCheats(map, (x, y)) : []));
-    return cheats;
-}
+static IEnumerable<Cheat> PaveCheats<TMap>(TMap map) where TMap : IList<IList<int>> =>
+    map.SelectMany((row, y) => row.SelectMany((value, x) => value >= 0 ? PointCheats(map, (x, y)) : Enumerable.Empty<Cheat>()));
+
 
 static IEnumerable<Cheat> PointCheats<TMap>(TMap map, Point p) where TMap : IList<IList<int>>
 {
@@ -58,78 +48,39 @@ static IEnumerable<Cheat> PointCheats<TMap>(TMap map, Point p) where TMap : ILis
     if (cost < 0)
         yield break;
 
+    foreach (var (dx, dy) in new[] { (0, -2), (2, 0), (0, 2), (-2, 0) })
     {
-        if (p.Y - 2 >= 0 && map[p.Y - 1][p.X] < 0 && map[p.Y - 2][p.X] - cost - 2 is int save && save > 0)
-            yield return new Cheat((p.X, p.Y - 1), (p.X, p.Y - 2), save);
-    }
-
-    {
-        if (p.X + 2 < width && map[p.Y][p.X + 1] < 0 && map[p.Y][p.X + 2] - cost - 2 is int save && save > 0)
-            yield return new Cheat((p.X + 1, p.Y), (p.X + 2, p.Y), save);
-    }
-
-    {
-        if (p.Y + 2 < height && map[p.Y + 1][p.X] < 0 && map[p.Y + 2][p.X] - cost - 2 is int save && save > 0)
-            yield return new Cheat((p.X, p.Y + 1), (p.X, p.Y + 2), save);
-    }
-
-    {
-        if (p.X - 2 >= 0 && map[p.Y][p.X - 1] < 0 && map[p.Y][p.X - 2] - cost - 2 is int save && save > 0)
-            yield return new Cheat((p.X - 1, p.Y), (p.X - 2, p.Y), save);
+        var (nx, ny) = (p.X + dx, p.Y + dy);
+        var (mx, my) = (p.X + dx / 2, p.Y + dy / 2);
+        if (nx >= 0 && ny >= 0 && nx < width && ny < height && map[my][mx] < 0 && map[ny][nx] - cost - 2 is int save && save > 0)
+            yield return new Cheat((mx, my), (nx, ny), save);
     }
 }
-
 
 static void PaveTrack<TMap>(TMap map, Point start, Point end) where TMap : IList<IList<int>>
 {
     var cost = 0;
+    var points = new Point[4];
     map[start.Y][start.X] = 0;
     while (start != end)
     {
         cost++;
-        
-        var count = 0;
-        Point next;
-        Point next2 = new();
 
-        next = new Point(start.X, start.Y - 1);
-        if (map[next.Y][next.X] > cost)
-        {
-            map[next.Y][next.X] = cost;
-            next2 = next;
-            count++;
-        }
+        points[0] = new Point(start.X, start.Y - 1);
+        points[1] = new Point(start.X + 1, start.Y);
+        points[2] = new Point(start.X, start.Y + 1);
+        points[3] = new Point(start.X - 1, start.Y);
 
-        next = new Point(start.X + 1, start.Y);
-        if (map[next.Y][next.X] > cost)
-        {
-            map[next.Y][next.X] = cost;
-            next2 = next;
-            count++;
-        }
+        var nextPoints = points.Where(next => map[next.Y][next.X] > cost).ToList();
 
-        next = new Point(start.X, start.Y + 1);
-        if (map[next.Y][next.X] > cost)
-        {
-            map[next.Y][next.X] = cost;
-            next2 = next;
-            count++;
-        }
+        if (nextPoints.Count == 0)
+            throw new NotSupportedException("No track found from start to end.");
+        if (nextPoints.Count > 1)
+            throw new NotSupportedException("Multiple tracks found from start to end.");
 
-        next = new Point(start.X - 1, start.Y);
-        if (map[next.Y][next.X] > cost)
-        {
-            map[next.Y][next.X] = cost;
-            next2 = next;
-            count++;
-        }
-
-        if (count < 1)
-            throw new NotSupportedException("No track");
-        if (count > 1)
-            throw new NotSupportedException("Multitrack");
-
-        start = next2;
+        var nextPoint = nextPoints[0];
+        map[nextPoint.Y][nextPoint.X] = cost;
+        start = nextPoint;
     }
 
     foreach (var (position, value) in map.FlatMap().Where(pv => pv.Value > cost))
@@ -138,8 +89,8 @@ static void PaveTrack<TMap>(TMap map, Point start, Point end) where TMap : IList
 
 static class Extensions
 {
-    public static IEnumerable<(Point Position, T Value)> FlatMap<T>(this IEnumerable<IEnumerable<T>> map)
-        => map.SelectMany((row, y) => row.Select((value, x) => ((x, y), value)));
+    public static IEnumerable<(Point Position, T Value)> FlatMap<T>(this IEnumerable<IEnumerable<T>> map) =>
+        map.SelectMany((row, y) => row.Select((value, x) => ((x, y), value)));
 
     public static IEnumerable<string> ReadLines(this TextReader reader)
     {
