@@ -36,7 +36,7 @@ static IEnumerable<Cheat> Solve<TMap>(TMap map) where TMap : IEnumerable<string>
 }
 
 static IEnumerable<Cheat> PaveCheats<TMap>(TMap map) where TMap : IList<IList<int>> =>
-    map.SelectMany((row, y) => row.SelectMany((value, x) => value >= 0 ? PointCheats(map, (x, y)) : Enumerable.Empty<Cheat>()));
+    map.SelectMany((row, y) => row.SelectMany((value, x) => value >= 0 ? PointCheats(map, (x, y)) : []));
 
 
 static IEnumerable<Cheat> PointCheats<TMap>(TMap map, Point p) where TMap : IList<IList<int>>
@@ -62,6 +62,7 @@ static void PaveTrack<TMap>(TMap map, Point start, Point end) where TMap : IList
     var cost = 0;
     var points = new Point[4];
     map[start.Y][start.X] = 0;
+
     while (start != end)
     {
         cost++;
@@ -74,9 +75,9 @@ static void PaveTrack<TMap>(TMap map, Point start, Point end) where TMap : IList
         var nextPoints = points.Where(next => map[next.Y][next.X] > cost).ToList();
 
         if (nextPoints.Count == 0)
-            throw new NotSupportedException("No track found from start to end.");
+            throw new NotSupportedException($"No track found from start ({start.X}, {start.Y}) to end ({end.X}, {end.Y}).");
         if (nextPoints.Count > 1)
-            throw new NotSupportedException("Multiple tracks found from start to end.");
+            throw new NotSupportedException($"Multiple tracks found from start ({start.X}, {start.Y}) to end ({end.X}, {end.Y}).");
 
         var nextPoint = nextPoints[0];
         map[nextPoint.Y][nextPoint.X] = cost;
