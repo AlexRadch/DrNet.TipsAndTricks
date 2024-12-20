@@ -41,6 +41,7 @@ static IEnumerable<Cheat> PaveCheats<TMap>(TMap map) where TMap : IList<IList<in
 
 static IEnumerable<Cheat> PointCheats<TMap>(TMap map, Point p) where TMap : IList<IList<int>>
 {
+    const int maxDuration = 2;
     var height = map.Count;
     var width = map.First().Count;
 
@@ -48,12 +49,19 @@ static IEnumerable<Cheat> PointCheats<TMap>(TMap map, Point p) where TMap : ILis
     if (cost < 0)
         yield break;
 
-    foreach (var (dx, dy) in new[] { (0, -2), (2, 0), (0, 2), (-2, 0) })
+    for (var ny = Math.Max(0, p.Y - maxDuration); ny <= Math.Min(height - 1, p.Y + maxDuration); ny++)
     {
-        var (nx, ny) = (p.X + dx, p.Y + dy);
-        var (mx, my) = (p.X + dx / 2, p.Y + dy / 2);
-        if (nx >= 0 && ny >= 0 && nx < width && ny < height && map[my][mx] < 0 && map[ny][nx] - cost - 2 is int save && save > 0)
-            yield return new Cheat((mx, my), (nx, ny), save);
+        int ady = Math.Abs(ny - p.Y);
+        for (var nx = Math.Max(0, p.X - maxDuration + ady); nx <= Math.Min(width - 1, p.X + maxDuration - ady); nx++)
+        {
+            var save = map[ny][nx];
+            if (save < 0)
+                continue;
+
+            save -= cost + ady + Math.Abs(nx - p.X);
+            if (save > 0)
+                yield return ((p.X, p.Y), (nx, ny), save);
+        }
     }
 }
 

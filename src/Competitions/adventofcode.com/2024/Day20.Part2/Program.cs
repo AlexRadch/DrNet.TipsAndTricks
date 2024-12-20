@@ -53,24 +53,16 @@ static IEnumerable<Cheat> PointCheats<TMap>(TMap map, Point p, int maxDuration, 
     if (cost < 0)
         yield break;
 
-    for (var dy = -maxDuration; dy <= maxDuration; dy++)
+    for (var ny = Math.Max(0, p.Y - maxDuration); ny <= Math.Min(height - 1, p.Y + maxDuration); ny++)
     {
-        int ady = Math.Abs(dy);
-        for (var dx = -maxDuration + ady; dx <= maxDuration - ady; dx++)
+        int ady = Math.Abs(ny - p.Y);
+        for (var nx = Math.Max(0, p.X - maxDuration + ady); nx <= Math.Min(width - 1, p.X + maxDuration - ady); nx++)
         {
-            var nx = p.X + dx;
-            if (nx < 0 || nx >= width)
-                continue;
-
-            var ny = p.Y + dy;
-            if (ny < 0 || ny >= height)
-                continue;
-
             var save = map[ny][nx];
             if (save < 0)
                 continue;
 
-            save -= cost + ady + Math.Abs(dx);
+            save -= cost + ady + Math.Abs(nx - p.X);
             if (save >= minSave && save > 0)
                 yield return ((p.X, p.Y), (nx, ny), save);
         }
