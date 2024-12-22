@@ -6,50 +6,50 @@ using System.Collections.ObjectModel;
 using Point = (int X, int Y);
 
 Console.WriteLine(126384);
-ProcessFile("input1.txt");
+ProcessFile("input1.txt", 1 + 1);
 Console.WriteLine();
 
 Console.WriteLine(163920);
-ProcessFile("input2.txt");
+ProcessFile("input2.txt", 1 + 1);
 
-static void ProcessFile(string filePath)
+static void ProcessFile(string filePath, int robots)
 {
     using var reader = File.OpenText(filePath);
     var codes = ReadCodes(reader).ToArray();
 
-    var solves = codes.Select(Solve).ToArray();
-
-    var result = codes.Zip(solves, (code, solve) => int.Parse(code[..^1]) * solve.Length).Sum();
+    var result = Solve(codes, robots);
     Console.WriteLine(result);
 }
 
 static IEnumerable<string> ReadCodes(TextReader reader) =>
     reader.ReadLines();
 
-static string Solve(string code)
+static long Solve<TCodes>(TCodes codes, int robots) where TCodes : IEnumerable<string>
 {
-    var inputs1 = DirectionalInputs(NumericKeypad, code)
-        .Select(input => (Complexity: Complexity(DirectionalKeypad, input), Value: input))
-        .ToArray();
-    var min1 = inputs1.Min(input => input.Complexity);
-    inputs1 = [.. inputs1.Where(input => input.Complexity == min1)];
+    var memos = new Dictionary<string, long>[robots];
+    for (var i = 0; i < robots; i++)
+        memos[i] = [];
 
-    var inputs2 = inputs1
-        .SelectMany(input1 => DirectionalInputs(DirectionalKeypad, input1.Value)
-            .Select(input2 => (Complexity: Complexity(DirectionalKeypad, input2), Value: input2)))
-        .ToArray();
-    var min2 = inputs2.Min(input => input.Complexity);
-    inputs2 = [.. inputs2.Where(input => input.Complexity == min2)];
+    var solves = codes.Select(code => (Code: code, Length: SolveCode(code, robots, memos)));
+    var result = solves.Select(solve => int.Parse(solve.Code[..^1]) * solve.Length).Sum();
+    return result;
+}
 
+static long SolveCode<TMemos>(string code, int robots, TMemos memos)
+    where TMemos : IReadOnlyList<IDictionary<string, long>>
+{
+    var inputs = DirectionalInputs(NumericKeypad, code).ToArray();
 
-    var inputs3 = inputs2
-        .SelectMany(input2 => DirectionalInputs(DirectionalKeypad, input2.Value)
-            .Select(input3 => (Complexity: Complexity(DirectionalKeypad, input3), Value: input3)))
-        .ToArray();
-    var min3 = inputs3.Min(input => input.Value.Length);
-    var input3 = inputs3.First(input => input.Value.Length == min3);
+    var costs = inputs.Select(input => Cost(input, robots, memos)).ToArray();
+    var min = costs.Min();
 
-    return input3.Value;
+    return min;
+}
+
+static long Cost<TMemos>(string code, int robot, TMemos memos)
+    where TMemos : IReadOnlyList<IDictionary<string, long>>
+{
+    return 0;
 }
 
 static IEnumerable<string> DirectionalInputs<TKeypad>(TKeypad keypad, string code) where TKeypad : IReadOnlyList<string>
@@ -104,34 +104,19 @@ static IEnumerable<string> InputsToNext(Point start, Point end, Point disabled)
         }
 
         yield return string.Create(Math.Abs(dx) + Math.Abs(dy) + 1, permutation, (span, permutation) =>
-            {
-                for (var i = 0; i < permutation.Length; i++)
-                    span[i] = items[permutation[i]];
-                span[permutation.Length] = 'A';
-            });
+        {
+            for (var i = 0; i < permutation.Length; i++)
+                span[i] = items[permutation[i]];
+            span[permutation.Length] = 'A';
+        });
     Skip:
         { }
     }
 }
 
-static int Complexity<TKeypad>(TKeypad keypad, string input) where TKeypad : IReadOnlyList<string>
-{
-    var codeToPoint = keypad.FlatMap().ToDictionary(mapPoint => mapPoint.Value, mapPoint => mapPoint.Point);
-
-    var result = 0;
-    var start = codeToPoint['A'];
-    foreach (var next in input.Select(c => codeToPoint[c]))
-    {
-        result += Math.Abs(next.X - start.X) + Math.Abs(next.Y - start.Y) + 1;
-        start = next;
-    }
-    return result;
-}
-
-
 partial class Program
 {
-    static readonly ReadOnlyCollection<string> NumericKeypad  = new string[] {
+    static readonly ReadOnlyCollection<string> NumericKeypad = new string[] {
         "789",
         "456",
         "123",
