@@ -6,16 +6,19 @@ using System.Collections.ObjectModel;
 using Point = (int X, int Y);
 
 Console.WriteLine(126384);
-ProcessFile("input1.txt", 1 + 1);
+ProcessFile("input1.txt", 2 + 1);
 Console.WriteLine();
 
 Console.WriteLine(163920);
-ProcessFile("input2.txt", 1 + 1);
+ProcessFile("input2.txt", 2 + 1);
+Console.WriteLine();
+
+ProcessFile("input2.txt", 25 + 1);
 
 static void ProcessFile(string filePath, int robots)
 {
     using var reader = File.OpenText(filePath);
-    var codes = ReadCodes(reader).ToArray();
+    var codes = ReadCodes(reader).ToList();
 
     var result = Solve(codes, robots);
     Console.WriteLine(result);
@@ -26,8 +29,8 @@ static IEnumerable<string> ReadCodes(TextReader reader) =>
 
 static long Solve<TCodes>(TCodes codes, int robots) where TCodes : IEnumerable<string>
 {
-    var memos = new Dictionary<string, long>[robots];
-    for (var i = 0; i < robots; i++)
+    var memos = new Dictionary<string, long>[robots - 1];
+    for (var i = 0; i < robots - 1; i++)
         memos[i] = [];
 
     var solves = codes.Select(code => (Code: code, Length: SolveCode(code, robots, memos)));
@@ -38,37 +41,55 @@ static long Solve<TCodes>(TCodes codes, int robots) where TCodes : IEnumerable<s
 static long SolveCode<TMemos>(string code, int robots, TMemos memos)
     where TMemos : IReadOnlyList<IDictionary<string, long>>
 {
-    var inputs = DirectionalInputs(NumericKeypad, code).ToArray();
+    var seqInputs = DirectionalInputs(NumericKeypadMap, code);
 
-    var costs = inputs.Select(input => Cost(input, robots, memos)).ToArray();
+    var costs = seqInputs.Select(inputs =>
+            inputs.Select(input => Cost(input, robots - 1, memos))
+                .Sum()
+        )
+        ;
+
     var min = costs.Min();
-
     return min;
 }
 
-static long Cost<TMemos>(string code, int robot, TMemos memos)
+static long Cost<TMemos>(string code, int keypadIndex, TMemos memos)
     where TMemos : IReadOnlyList<IDictionary<string, long>>
 {
-    return 0;
+    if (keypadIndex == 0)
+        return code.Length;
+
+    if (memos[keypadIndex - 1].TryGetValue(code, out var result))
+        return result;
+
+    var minCost = long.MaxValue;
+
+    var seqInputs = DirectionalInputs(DirectionalKeypadMap, code);
+    foreach (var inputs in seqInputs)
+    {
+        var costs = inputs.Select(input => Cost(input, keypadIndex - 1, memos));
+        var cost = costs.Sum();
+        if (cost < minCost)
+            minCost = cost;
+    }
+
+    memos[keypadIndex - 1][code] = minCost;
+    return minCost;
 }
 
-static IEnumerable<string> DirectionalInputs<TKeypad>(TKeypad keypad, string code) where TKeypad : IReadOnlyList<string>
+static IEnumerable<IEnumerable<string>> DirectionalInputs<TKeypadMap>(TKeypadMap keypadMap, string code)
+    where TKeypadMap : IReadOnlyDictionary<char, Point>
 {
-    var codeToPoint = keypad.FlatMap().ToDictionary(mapPoint => mapPoint.Value, mapPoint => mapPoint.Point);
+    var start = keypadMap['A'];
+    var disabled = keypadMap[' '];
 
-    var start = codeToPoint['A'];
-    var disabled = codeToPoint[' '];
-
-    IEnumerable<string>? result = default;
-    foreach (var next in code.Select(chr => codeToPoint[chr]))
+    IEnumerable<IEnumerable<string>> result = [[]];
+    foreach (var next in code.Select(chr => keypadMap[chr]))
     {
         var currentStart = start; // For correct closure
-        if (result is null)
-            result = InputsToNext(currentStart, next, disabled);
-        else
-            result = result.SelectMany(input =>
-                    InputsToNext(currentStart, next, disabled).Select(nextInput => input + nextInput)
-                );
+        IEnumerable<string> nextInputs = [.. InputsToNext(currentStart, next, disabled)];
+
+        result = [.. result.SelectMany(inputs => nextInputs.Select(nextInput => inputs.Append(nextInput)))];
         start = next;
     }
 
@@ -123,10 +144,20 @@ partial class Program
         " 0A"
         }.AsReadOnly();
 
+    static readonly ReadOnlyDictionary<char, Point> NumericKeypadMap = NumericKeypad
+        .FlatMap()
+        .ToDictionary(mapPoint => mapPoint.Value, mapPoint => mapPoint.Point)
+        .AsReadOnly();
+
     static readonly ReadOnlyCollection<string> DirectionalKeypad = new string[] {
         " ^A",
         "<v>",
         }.AsReadOnly();
+
+    static readonly ReadOnlyDictionary<char, Point> DirectionalKeypadMap = DirectionalKeypad
+        .FlatMap()
+        .ToDictionary(mapPoint => mapPoint.Value, mapPoint => mapPoint.Point)
+        .AsReadOnly();
 }
 
 static class Extensions
@@ -140,9 +171,10 @@ static class Extensions
             yield return line;
     }
 
-    public static IEnumerable<int[]> PermutationsOfMultiset<TCounts>(this TCounts counts) where TCounts : IEnumerable<int>
+    public static IEnumerable<int[]> PermutationsOfMultiset<TCounts>(this TCounts counts)
+        where TCounts : IEnumerable<int>
     {
-        var countList = counts.ToArray();
+        var countList = counts.ToList();
         var total = countList.Sum();
         var result = new int[total];
 
@@ -156,7 +188,7 @@ static class Extensions
                 yield break;
             }
 
-            for (int i = 0; i < countList.Length; i++)
+            for (int i = 0; i < countList.Count; i++)
             {
                 if (countList[i] > 0)
                 {
