@@ -14,14 +14,14 @@ static void ProcessFile(string filePath)
 
     var secretsEnd = secrets.Select(secret => Solve(secret, 2000));
 
-    var result = secretsEnd.Sum();
+    var result = secretsEnd.Select(secret => (long)secret).Sum();
     Console.WriteLine(result);
 }
 
 static IEnumerable<int> ReadSecrets(TextReader reader) =>
     reader.ReadLines().Select(int.Parse);
 
-static long Solve(long secret, int times)
+static int Solve(int secret, int times)
 {
     for (int i = 0; i < times; i++)
         secret = TransformSecret(secret);
@@ -29,7 +29,7 @@ static long Solve(long secret, int times)
     return secret;
 }
 
-static long TransformSecret(long secret)
+static int TransformSecret(int secret)
 {
     secret ^= secret << 6;
     secret &= 16777216 - 1;
