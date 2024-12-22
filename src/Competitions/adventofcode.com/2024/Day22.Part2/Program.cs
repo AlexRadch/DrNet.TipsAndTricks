@@ -21,20 +21,18 @@ static void ProcessFile(string filePath)
 static IEnumerable<int> ReadSecrets(TextReader reader) =>
     reader.ReadLines().Select(int.Parse);
 
-static int Solve<TSecrets>(TSecrets secrets, int times) where TSecrets: IEnumerable<int>
+static int Solve<TSecrets>(TSecrets secrets, int times) where TSecrets : IEnumerable<int>
 {
-
     var predictBananas = new int[MaxChanges];
-
 
     foreach (var secret in secrets)
         PredictBananas(secret, times, predictBananas);
 
-    var maxPair = predictBananas.Index().MaxBy(pair => pair.Item);
-    return maxPair.Item;
+    var max = predictBananas.Max();
+    return max;
 }
 
-static void PredictBananas<TPredict>(int secret, int times, TPredict predictBananas) where TPredict: IList<int>
+static void PredictBananas<TPredict>(int secret, int times, TPredict predictBananas) where TPredict : IList<int>
 {
     var changesExist = new BitArray(MaxChanges);
 
@@ -81,11 +79,13 @@ partial class Program
     const int ChangesRadix = 20;    // ChangesMax - ChangesMin + 1;
     const int MaxChanges = ChangesRadix * ChangesRadix * ChangesRadix * ChangesRadix;
 
-    internal static int[] ChangesFromIndex(int changesIndex) => [
+    internal static int[] ChangesFromIndex(int changesIndex) =>
+    [
         (changesIndex % ChangesRadix) + ChangesMin,
         (changesIndex / ChangesRadix % ChangesRadix) + ChangesMin,
         (changesIndex / (ChangesRadix * ChangesRadix) % ChangesRadix) + ChangesMin,
-        (changesIndex / (ChangesRadix * ChangesRadix * ChangesRadix) % ChangesRadix) + ChangesMin];
+        (changesIndex / (ChangesRadix * ChangesRadix * ChangesRadix) % ChangesRadix) + ChangesMin
+    ];
 }
 
 static class Extensions
