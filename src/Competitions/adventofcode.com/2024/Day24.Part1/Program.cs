@@ -7,83 +7,119 @@ Console.WriteLine();
 ProcessFile("input2.txt");
 Console.WriteLine();
 
+ProcessFile("input3.txt");
+Console.WriteLine();
+
 static void ProcessFile(string filePath)
 {
     using var reader = File.OpenText(filePath);
-    var pairs = ReadPairs(reader).ToList();
+    var wares = ReadWares(reader).ToList();
+    var gates = ReadGates(reader).ToList();
 
-    var result = Solve(pairs);
+    var result = Solve(wares, gates);
     Console.WriteLine(result);
 }
 
-static IEnumerable<Pair> ReadPairs(TextReader reader) =>
-    reader.ReadLines().Select(line => new Pair(line[..2], line[3..5]));
 
-static int Solve<TPairs>(TPairs pairs) where TPairs : IEnumerable<Pair>
+static IEnumerable<Ware> ReadWares(TextReader reader) =>
+    reader.ReadLines().TakeWhile(line => line.Length > 0)
+        .Select(line => line.Split(':', StringSplitOptions.TrimEntries) is { } parts 
+            ? new Ware(parts[0], parts[1] == "1")
+            : throw new InvalidDataException($"ReadWares {line}")
+        );
+
+static IEnumerable<Gate2> ReadGates(TextReader reader) =>
+    reader.ReadLines()
+        .Select(line => line.Split("->", StringSplitOptions.TrimEntries) is { } parts1
+            ? parts1[0].Split(' ') is { } parts2
+                ? new Gate2(parts2[0], MapOperation2(parts2[1]), parts2[2], parts1[1])
+                : throw new InvalidDataException($"ReadGates2 {line} {parts1[0]}")
+            : throw new InvalidDataException($"ReadGates1 {line}")
+        );
+
+static long Solve<TWares, TGates>(TWares wares, TGates gates)
+    where TWares: IEnumerable<Ware>
+    where TGates: IEnumerable<Gate2>
 {
-    var pairsDict = new Dictionary<string, HashSet<string>>();
-    foreach (var pair in pairs)
-    {
-        if (!pairsDict.TryGetValue(pair.Item1, out var set1))
-            pairsDict.Add(pair.Item1, set1 = []);
-        set1.Add(pair.Item2);
+    var circuit = new Dictionary<string, CircuitElement>();
 
-        //if (!pairsDict.TryGetValue(pair.Item2, out var set2))
-        //    pairsDict.Add(pair.Item2, set2 = []);
+    foreach (var ware in wares)
+        circuit[ware.Output] = new CircuitElement(circuit, ware);
 
-        //set2.Add(pair.Item1);
-    }
+    foreach (var gate in gates)
+        circuit[gate.Output] = new CircuitElement(circuit, gate);
 
-    var empty = new HashSet<string>();
-    var triplets = pairsDict
-        .SelectMany(item1 => item1.Value
-            .SelectMany(item2 => item1.Value
-                .Intersect(pairsDict.GetValueOrDefault(item2, empty))
-                .Where(item3 => item1.Key[0] == 't' || item2[0] == 't' || item3[0] == 't')
-                .Select(item3 => new Triplet(item1.Key, item2, item3))
-            )
-        )
-        //.Where(triplet => triplet.Item1[0] == 't' || triplet.Item2[0] == 't' || triplet.Item3[0] == 't')
-        //.Distinct()
-        ;
+    var values = circuit.Keys.Where(key => key[0] == 'z').OrderDescending()
+        .Select(key => circuit[key].Value ? 1 : 0).ToList();
 
-    return triplets.Count();
+    var result = values.Aggregate(0L, (acc, value) => (acc << 1) | (long)value);
+    return result;
 }
 
-readonly record struct Pair
-{
-    public string Item1 { get; init; }
-    public string Item2 { get; init; }
-
-    public Pair(string item1, string item2)
+static Operation2 MapOperation2(string operation) =>
+    operation switch
     {
-        if (string.Compare(item1, item2) <= 0)
+        "AND" => Operation2.And,
+        "XOR" => Operation2.Xor,
+        "OR" => Operation2.Or,
+        _ => throw new InvalidDataException($"MapOperation {operation}")
+    };
+
+record CircuitElement(Dictionary<string, CircuitElement> Circuit, Element Element)
+{
+    private bool? _value;
+    public bool Value 
+    {
+        get
         {
-            Item1 = item1;
-            Item2 = item2;
-        }
-        else
-        {
-            Item1 = item2;
-            Item2 = item1;
+            _value ??= Element switch
+                {
+                    Ware ware => ware.Value,
+                    Gate2 gate => gate.Operation switch
+                    {
+                        Operation2.And => Circuit[gate.In1].Value && Circuit[gate.In2].Value,
+                        Operation2.Xor => Circuit[gate.In1].Value ^ Circuit[gate.In2].Value,
+                        Operation2.Or => Circuit[gate.In1].Value || Circuit[gate.In2].Value,
+                        _ => throw new InvalidDataException($"CircuitElement {gate.Operation}")
+                    },
+                    _ => throw new InvalidDataException($"CircuitElement {Element}")
+                };
+            return _value.Value;
         }
     }
 }
 
-readonly record struct Triplet
-{
-    public string Item1 { get; init; }
-    public string Item2 { get; init; }
-    public string Item3 { get; init; }
+abstract record Element(string Output);
 
-    public Triplet(string item1, string item2, string item3)
+record Ware: Element
+{
+    public bool Value { get; init; }
+
+    public Ware(string output, bool value) : base(output) 
     {
-        var items = new[] { item1, item2, item3 };
-        Array.Sort(items, StringComparer.Ordinal);
-        Item1 = items[0];
-        Item2 = items[1];
-        Item3 = items[2];
+        Value = value;
     }
+}
+
+record Gate2 : Element
+{
+    public string In1 { get; init; }
+    public Operation2 Operation { get; init; }
+    public string In2 { get; init; }
+
+    public Gate2(string in1, Operation2 operation, string in2, string output) : base(output)
+    {
+        In1 = in1;
+        Operation = operation;
+        In2 = in2;
+    }
+}
+
+enum Operation2
+{
+    And,
+    Xor,
+    Or,
 }
 
 static class Extensions
