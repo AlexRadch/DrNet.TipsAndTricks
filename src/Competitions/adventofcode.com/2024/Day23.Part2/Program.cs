@@ -12,16 +12,19 @@ static void ProcessFile(string filePath)
     using var reader = File.OpenText(filePath);
     var pairs = ReadPairs(reader).ToList();
 
-    var party = Solve(pairs).Order();
+    var party = Solve1(pairs).Order();
     var result = string.Join(',', party);
+    Console.WriteLine(result);
 
+    party = Solve2(pairs).Order();
+    result = string.Join(',', party);
     Console.WriteLine(result);
 }
 
 static IEnumerable<Pair> ReadPairs(TextReader reader) =>
     reader.ReadLines().Select(line => new Pair(line[..2], line[3..5]));
 
-static IEnumerable<string> Solve<TPairs>(TPairs pairs) where TPairs : IEnumerable<Pair>
+static IEnumerable<string> Solve1<TPairs>(TPairs pairs) where TPairs : IEnumerable<Pair>
 {
     var pairSet = new HashSet<Pair>(pairs);
 
@@ -51,6 +54,44 @@ static IEnumerable<string> Solve<TPairs>(TPairs pairs) where TPairs : IEnumerabl
     var maxParty = allParties.MaxBy(party => party.Count) ?? [];
 
     return maxParty;
+}
+
+static IEnumerable<string> Solve2<TPairs>(TPairs pairs) where TPairs : IEnumerable<Pair>
+{
+    var parties = new Dictionary<SortedSet<string>, HashSet<string>>(SortedSet<string>.CreateSetComparer());
+    foreach (var pair in pairs)
+    {
+        var key = new SortedSet<string> { pair.Item1 };
+        if (!parties.TryGetValue(key, out var party))
+            parties[key] = party = [];
+        party.Add(pair.Item2);
+    }
+
+    var added = parties.Count > 0;
+    while (added)
+    {
+        var nextParties = new Dictionary<SortedSet<string>, HashSet<string>>(SortedSet<string>.CreateSetComparer());
+        foreach ((var key, var party) in parties)
+        {
+            foreach (var item in party)
+            {
+                var itemKey = new SortedSet<string>(key.SkipLast(1)) { item };
+                if (parties.TryGetValue(itemKey, out var itemParty))
+                {
+                    var nextParty = new HashSet<string>(party.Intersect(itemParty));
+                    if (nextParty.Count > 0)
+                        nextParties[[.. key, item]] = nextParty;
+                }
+            }
+        }
+
+        added = nextParties.Count > 0;
+        if (added)
+            parties = nextParties;
+    }
+
+    var result = parties.First();
+    return result.Key.Concat(result.Value);
 }
 
 readonly record struct Pair
