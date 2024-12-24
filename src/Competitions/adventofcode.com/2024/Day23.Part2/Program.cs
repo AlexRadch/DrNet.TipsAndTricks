@@ -47,7 +47,7 @@ static IEnumerable<string> Solve<TPairs>(TPairs pairs) where TPairs : IEnumerabl
         }
     }
 
-    var allParties = itemsDict.Values.SelectMany(dict => dict.Values).ToList();
+    var allParties = itemsDict.Values.SelectMany(dict => dict.Values);
     var maxParty = allParties.MaxBy(party => party.Count) ?? [];
 
     return maxParty;

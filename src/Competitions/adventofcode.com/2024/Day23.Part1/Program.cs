@@ -21,42 +21,33 @@ static IEnumerable<Pair> ReadPairs(TextReader reader) =>
 
 static int Solve<TPairs>(TPairs pairs) where TPairs : IEnumerable<Pair>
 {
-    var pairsDict = new Dictionary<string, HashSet<Pair>>();
+    var pairsDict = new Dictionary<string, HashSet<string>>();
     foreach (var pair in pairs)
     {
         if (!pairsDict.TryGetValue(pair.Item1, out var set1))
             pairsDict.Add(pair.Item1, set1 = []);
-        set1.Add(pair);
+        set1.Add(pair.Item2);
 
-        if (!pairsDict.TryGetValue(pair.Item2, out var set2))
-            pairsDict.Add(pair.Item2, set2 = []);
+        //if (!pairsDict.TryGetValue(pair.Item2, out var set2))
+        //    pairsDict.Add(pair.Item2, set2 = []);
 
-        set2.Add(pair);
+        //set2.Add(pair.Item1);
     }
 
-    var triplets = new HashSet<Triplet>();
-    foreach (var first in pairsDict.Keys.Where(key => key[0] == 't').SelectMany(key => pairsDict[key]))
-    {
-        var set = pairsDict[first.Item1];
+    var empty = new HashSet<string>();
+    var triplets = pairsDict
+        .SelectMany(item1 => item1.Value
+            .SelectMany(item2 => item1.Value
+                .Intersect(pairsDict.GetValueOrDefault(item2, empty))
+                .Where(item3 => item1.Key[0] == 't' || item2[0] == 't' || item3[0] == 't')
+                .Select(item3 => new Triplet(item1.Key, item2, item3))
+            )
+        )
+        //.Where(triplet => triplet.Item1[0] == 't' || triplet.Item2[0] == 't' || triplet.Item3[0] == 't')
+        //.Distinct()
+        ;
 
-        foreach (var second in set)
-        {
-            if (second.Item1 != first.Item1 && second.Item1 != first.Item2)
-            {
-                var third = new Pair(second.Item1, second.Item2 == first.Item1 ? first.Item2 : first.Item1);
-                if (pairsDict[second.Item1].Contains(third))
-                    triplets.Add(new Triplet(second.Item1, first.Item1, first.Item2));
-            }
-            if (second.Item2 != first.Item1 && second.Item2 != first.Item2)
-            {
-                var third = new Pair(second.Item1 == first.Item1 ? first.Item2 : first.Item1, second.Item2);
-                if (pairsDict[second.Item2].Contains(third))
-                    triplets.Add(new Triplet(first.Item1, first.Item2, second.Item2));
-            }
-        }
-    }
-
-    return triplets.Count;
+    return triplets.Count();
 }
 
 readonly record struct Pair
