@@ -12,14 +12,63 @@ static void ProcessFile(string filePath)
     using var reader = File.OpenText(filePath);
     var pairs = ReadPairs(reader).ToList();
 
-    var result = Solve(pairs);
+    var result = Solve1(pairs);
+    Console.WriteLine(result);
+
+    result = Solve2(pairs);
     Console.WriteLine(result);
 }
 
 static IEnumerable<Pair> ReadPairs(TextReader reader) =>
     reader.ReadLines().Select(line => new Pair(line[..2], line[3..5]));
 
-static int Solve<TPairs>(TPairs pairs) where TPairs : IEnumerable<Pair>
+static int Solve1<TPairs>(TPairs pairs) where TPairs : IEnumerable<Pair>
+{
+    var pairsDict = new Dictionary<string, HashSet<Pair>>();
+    foreach (var pair in pairs)
+    {
+        if (!pairsDict.TryGetValue(pair.Item1, out var set1))
+            pairsDict.Add(pair.Item1, set1 = []);
+        set1.Add(pair);
+
+        if (!pairsDict.TryGetValue(pair.Item2, out var set2))
+            pairsDict.Add(pair.Item2, set2 = []);
+
+        set2.Add(pair);
+    }
+
+    var triplets = new HashSet<Triplet>();
+    foreach (var first in pairsDict.Keys
+        .Where(key => key[0] == 't')
+        .SelectMany(key => pairsDict[key])
+    )
+    {
+        var set = pairsDict[first.Item1];
+
+        foreach (var second in set)
+        {
+            if (second.Item1 != first.Item1 && second.Item1 != first.Item2)
+            {
+                var third = new Pair(second.Item1, second.Item2 == first.Item1 ? first.Item2 : first.Item1);
+                if (pairsDict[second.Item1].Contains(third))
+                    triplets.Add(new Triplet(second.Item1, first.Item1, first.Item2));
+            }
+            if (second.Item2 != first.Item1 && second.Item2 != first.Item2)
+            {
+                var third = new Pair(second.Item1 == first.Item1 ? first.Item2 : first.Item1, second.Item2);
+                if (pairsDict[second.Item2].Contains(third))
+                    triplets.Add(new Triplet(first.Item1, first.Item2, second.Item2));
+            }
+        }
+    }
+
+    //var result = triplets.Where(triplet => triplet.Item1[0] == 't' || triplet.Item2[0] == 't' || triplet.Item3[0] == 't');
+    //return result.Count();
+
+    return triplets.Count;
+}
+
+static int Solve2<TPairs>(TPairs pairs) where TPairs : IEnumerable<Pair>
 {
     var pairsDict = new Dictionary<string, HashSet<string>>();
     foreach (var pair in pairs)
@@ -39,11 +88,12 @@ static int Solve<TPairs>(TPairs pairs) where TPairs : IEnumerable<Pair>
         .SelectMany(item1 => item1.Value
             .SelectMany(item2 => item1.Value
                 .Intersect(pairsDict.GetValueOrDefault(item2, empty))
-                .Where(item3 => item1.Key[0] == 't' || item2[0] == 't' || item3[0] == 't')
-                .Select(item3 => new Triplet(item1.Key, item2, item3))
+                //.Where(item3 => item1.Key[0] == 't' || item2[0] == 't' || item3[0] == 't')
+                //.Select(item3 => new Triplet(item1.Key, item2, item3))
+                .Select(item3 => (Item1: item1.Key, Item2: item2, Item3: item3))
             )
         )
-        //.Where(triplet => triplet.Item1[0] == 't' || triplet.Item2[0] == 't' || triplet.Item3[0] == 't')
+        .Where(triplet => triplet.Item1[0] == 't' || triplet.Item2[0] == 't' || triplet.Item3[0] == 't')
         //.Distinct()
         ;
 
