@@ -13,109 +13,111 @@ Console.WriteLine();
 static void ProcessFile(string filePath)
 {
     using var reader = File.OpenText(filePath);
-    var wares = ReadWares(reader).ToList();
-    var gates = ReadGates(reader).ToList();
 
-    var result = Solve(wares, gates);
+    var circuit = new Circuit();
+    foreach (var element in ReadWares(reader, circuit))
+        circuit[element.Output] = element;
+
+    foreach (var element in ReadGates(reader, circuit))
+        circuit[element.Output] = element;
+
+    var result = Solve(circuit);
     Console.WriteLine(result);
 }
 
 
-static IEnumerable<Ware> ReadWares(TextReader reader) =>
+static IEnumerable<Ware> ReadWares(TextReader reader, Circuit circuit) =>
     reader.ReadLines().TakeWhile(line => line.Length > 0)
-        .Select(line => line.Split(':', StringSplitOptions.TrimEntries) is { } parts 
-            ? new Ware(parts[0], parts[1] == "1")
+        .Select(line => line.Split(':', StringSplitOptions.TrimEntries) is { } parts
+            ? new Ware(circuit, parts[0]) { Value = parts[1] == "1" }
             : throw new InvalidDataException($"ReadWares {line}")
         );
 
-static IEnumerable<Gate2> ReadGates(TextReader reader) =>
+static IEnumerable<Gate> ReadGates(TextReader reader, Circuit circuit) =>
     reader.ReadLines()
         .Select(line => line.Split("->", StringSplitOptions.TrimEntries) is { } parts1
             ? parts1[0].Split(' ') is { } parts2
-                ? new Gate2(parts2[0], MapOperation2(parts2[1]), parts2[2], parts1[1])
+                ? new Gate(circuit, parts2[0], MapOperation(parts2[1]), parts2[2], parts1[1])
                 : throw new InvalidDataException($"ReadGates2 {line} {parts1[0]}")
             : throw new InvalidDataException($"ReadGates1 {line}")
         );
 
-static long Solve<TWares, TGates>(TWares wares, TGates gates)
-    where TWares: IEnumerable<Ware>
-    where TGates: IEnumerable<Gate2>
+static long Solve(Circuit circuit)
 {
-    var circuit = new Dictionary<string, CircuitElement>();
-
-    foreach (var ware in wares)
-        circuit[ware.Output] = new CircuitElement(circuit, ware);
-
-    foreach (var gate in gates)
-        circuit[gate.Output] = new CircuitElement(circuit, gate);
-
     var values = circuit.Keys.Where(key => key[0] == 'z').OrderDescending()
-        .Select(key => circuit[key].Value ? 1 : 0).ToList();
+        .Select(key => circuit[key].Evaluate()!.Value ? 1 : 0).ToList();
 
     var result = values.Aggregate(0L, (acc, value) => (acc << 1) | (long)value);
     return result;
 }
 
-static Operation2 MapOperation2(string operation) =>
+static Operation MapOperation(string operation) =>
     operation switch
     {
-        "AND" => Operation2.And,
-        "XOR" => Operation2.Xor,
-        "OR" => Operation2.Or,
+        "AND" => Operation.And,
+        "XOR" => Operation.Xor,
+        "OR" => Operation.Or,
         _ => throw new InvalidDataException($"MapOperation {operation}")
     };
 
-record CircuitElement(Dictionary<string, CircuitElement> Circuit, Element Element)
+class Circuit : Dictionary<string, Element> { }
+
+abstract record Element(Circuit Circuit, string Output)
+{
+    public abstract bool? Evaluate();
+}
+
+
+record Ware(Circuit Circuit, string Output) : Element(Circuit, Output)
+{
+    public bool Value { get; set; }
+
+    public override bool? Evaluate() => Value;
+}
+
+record Gate(Circuit Circuit, string In1, Operation Operation, string In2, string Output) : Element(Circuit, Output)
 {
     private bool? _value;
-    public bool Value 
+    private bool _evaluation;
+    public override bool? Evaluate()
     {
-        get
-        {
-            _value ??= Element switch
-                {
-                    Ware ware => ware.Value,
-                    Gate2 gate => gate.Operation switch
-                    {
-                        Operation2.And => Circuit[gate.In1].Value && Circuit[gate.In2].Value,
-                        Operation2.Xor => Circuit[gate.In1].Value ^ Circuit[gate.In2].Value,
-                        Operation2.Or => Circuit[gate.In1].Value || Circuit[gate.In2].Value,
-                        _ => throw new InvalidDataException($"CircuitElement {gate.Operation}")
-                    },
-                    _ => throw new InvalidDataException($"CircuitElement {Element}")
-                };
+        if (_value.HasValue)
             return _value.Value;
+        if (_evaluation) // Circuit recursion
+            return default;
+
+        _evaluation = true;
+        try
+        {
+            var value1 = Circuit[In1].Evaluate();
+            if (!value1.HasValue)
+                return default;
+
+
+            var value2 = Circuit[In2].Evaluate();
+            if (!value2.HasValue)
+                return default;
+
+            return _value ??= Evaluate(value1.Value, Operation, value2.Value);
+        }
+        finally
+        {
+            _evaluation = false;
         }
     }
-}
 
-abstract record Element(string Output);
+    public void Reset() => _value = null;
 
-record Ware: Element
-{
-    public bool Value { get; init; }
-
-    public Ware(string output, bool value) : base(output) 
+    public static bool Evaluate(bool in1, Operation operation, bool in2) => operation switch
     {
-        Value = value;
-    }
+        Operation.And => in1 && in2,
+        Operation.Xor => in1 ^ in2,
+        Operation.Or => in1 || in2,
+        _ => throw new InvalidDataException($"Gate.Evaluate invalid operation {operation}")
+    };
 }
 
-record Gate2 : Element
-{
-    public string In1 { get; init; }
-    public Operation2 Operation { get; init; }
-    public string In2 { get; init; }
-
-    public Gate2(string in1, Operation2 operation, string in2, string output) : base(output)
-    {
-        In1 = in1;
-        Operation = operation;
-        In2 = in2;
-    }
-}
-
-enum Operation2
+enum Operation
 {
     And,
     Xor,

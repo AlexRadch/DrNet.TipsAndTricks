@@ -6,8 +6,8 @@ using System.Collections.ObjectModel;
 ProcessFile("input1.txt");
 Console.WriteLine();
 
-ProcessFile("input2.txt");
-Console.WriteLine();
+//ProcessFile("input2.txt");
+//Console.WriteLine();
 
 static void ProcessFile(string filePath)
 {
@@ -19,8 +19,8 @@ static void ProcessFile(string filePath)
 }
 
 
-static int ReadLocksAndKeys(TextReader reader, 
-    out ReadOnlyCollection<ReadOnlyCollection<int>> locks, 
+static int ReadLocksAndKeys(TextReader reader,
+    out ReadOnlyCollection<ReadOnlyCollection<int>> locks,
     out ReadOnlyCollection<ReadOnlyCollection<int>> keys)
 {
     int height = 0;
@@ -30,7 +30,6 @@ static int ReadLocksAndKeys(TextReader reader,
     foreach (var pattern in ReadPatterns(reader))
     {
         height = pattern.Count() - 2;
-
         var firstLine = pattern.First();
         if (firstLine[0] == '#')
         {
@@ -64,7 +63,7 @@ static int ReadLocksAndKeys(TextReader reader,
 static IEnumerable<IEnumerable<string>> ReadPatterns(TextReader reader)
 {
     while (reader.ReadLines().TakeWhile(line => !string.IsNullOrEmpty(line)).ToList() is { } pattern &&
-        pattern.Count > 0)
+        pattern.Count != 0)
     {
         yield return pattern;
     }
