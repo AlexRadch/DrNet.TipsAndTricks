@@ -19,6 +19,10 @@ static void ProcessFile(string filePath)
     party = Solve2(pairs).Order();
     result = string.Join(',', party);
     Console.WriteLine(result);
+
+    party = Solve3(pairs).Order();
+    result = string.Join(',', party);
+    Console.WriteLine(result);
 }
 
 static IEnumerable<Pair> ReadPairs(TextReader reader) =>
@@ -26,10 +30,10 @@ static IEnumerable<Pair> ReadPairs(TextReader reader) =>
 
 static IEnumerable<string> Solve1<TPairs>(TPairs pairs) where TPairs : IEnumerable<Pair>
 {
-    var pairSet = new HashSet<Pair>(pairs);
+    var pairsSet = new HashSet<Pair>(pairs);
 
-    var itemsDict = new Dictionary<string, Dictionary<Pair, List<string>>>();
-    foreach (var pair in pairSet)
+    var itemsDict = new Dictionary<string, Dictionary<Pair, HashSet<string>>>();
+    foreach (var pair in pairsSet)
     {
         if (!itemsDict.TryGetValue(pair.Item1, out var partiesDict))
             itemsDict[pair.Item1] = partiesDict = [];
@@ -45,7 +49,7 @@ static IEnumerable<string> Solve1<TPairs>(TPairs pairs) where TPairs : IEnumerab
             if (party == pairParty)
                 continue;
 
-            if (party.All(item3 => pairSet.Contains(new Pair(pair.Item2, item3))))
+            if (party.All(item3 => pairsSet.Contains(new Pair(pair.Item2, item3))))
                 party.Add(pair.Item2);
         }
     }
@@ -92,6 +96,74 @@ static IEnumerable<string> Solve2<TPairs>(TPairs pairs) where TPairs : IEnumerab
 
     var result = parties.First();
     return result.Key.Concat(result.Value);
+}
+
+static IEnumerable<string> Solve3<TPairs>(TPairs pairs) where TPairs : IEnumerable<Pair>
+{
+    var graph = new Dictionary<string, HashSet<string>>();
+    foreach (var pair in pairs)
+    {
+        if (!graph.TryGetValue(pair.Item1, out var list))
+            graph[pair.Item1] = list = [];
+        list.Add(pair.Item2);
+
+        if (!graph.TryGetValue(pair.Item2, out list))
+            graph[pair.Item2] = list = [];
+        list.Add(pair.Item1);
+    }
+
+    var result = SolveBronKerbosch(graph.AsReadOnly());
+    return result;
+}
+
+
+static List<string> SolveBronKerbosch<TGraphItems>(IReadOnlyDictionary<string, TGraphItems> graph)
+    where TGraphItems : IEnumerable<string>
+{
+    var result = new List<string>();
+    BronKerbosch([], new HashSet<string>(graph.Keys), new HashSet<string>(), graph, result);
+    return result;
+}
+
+
+static void BronKerbosch<TGraphItems>(IEnumerable<string> R, ISet<string> P, ISet<string> X,
+    IReadOnlyDictionary<string, TGraphItems> graph, ICollection<string> largestClique)
+    where TGraphItems: IEnumerable<string>
+{
+    string pivot;
+    if (P.Count > 0)
+        pivot = P.First();
+    else if (X.Count > 0)
+        pivot = X.First();
+    else
+    {
+        // Found a clique
+        if (R.Count() > largestClique.Count)
+        {
+            largestClique.Clear();
+            foreach (var item in R)
+                largestClique.Add(item);
+        }
+        return;
+    }
+
+    var notNeighbors = new HashSet<string>(P);
+    notNeighbors.ExceptWith(graph[pivot]);
+    foreach (var v in notNeighbors)
+    {
+        var newR = R.Append(v);
+        var vNeighbors = graph[v];
+
+        var newP = new HashSet<string>(P);
+        newP.IntersectWith(vNeighbors);
+
+        var newX = new HashSet<string>(X);
+        newX.IntersectWith(vNeighbors);
+
+        BronKerbosch(newR, newP, newX, graph, largestClique);
+        P.Remove(v);
+        X.Add(v);
+    }
 }
 
 readonly record struct Pair
